@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    @apply bg-ink-900 text-chalk-200 font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(139, 124, 246, 0.35);
+    color: #f5f5f7;
+  }
+
+  /* Subtle film grain via radial noise */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: radial-gradient(
+        rgba(255, 255, 255, 0.018) 1px,
+        transparent 1px
+      );
+    background-size: 3px 3px;
+    mix-blend-mode: overlay;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.04] border border-white/[0.06] backdrop-blur-glass shadow-glass rounded-tokenLg;
+  }
+
+  .hairline {
+    @apply border-white/[0.06];
+  }
+
+  .eyebrow {
+    @apply text-[11px] uppercase tracking-[0.22em] text-chalk-400 font-medium;
+  }
+
+  .link-underline {
+    @apply relative inline-flex items-center gap-1.5 text-chalk-100 transition-colors duration-300 ease-soft hover:text-accent-soft;
+  }
+
+  .link-underline::after {
+    content: "";
+    @apply absolute left-0 -bottom-0.5 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-300 ease-soft;
+  }
+
+  .link-underline:hover::after {
+    @apply origin-left scale-x-100;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-3 rounded-token text-sm font-medium transition-all duration-300 ease-soft;
+  }
+
+  .btn-primary {
+    @apply btn bg-chalk-50 text-ink-900 hover:bg-white;
+  }
+
+  .btn-ghost {
+    @apply btn border border-white/10 text-chalk-100 hover:border-white/20 hover:bg-white/[0.03];
+  }
+}
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
