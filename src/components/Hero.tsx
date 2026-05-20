@@ -72,6 +72,15 @@ export function Hero() {
                   />
                 </svg>
               </a>
+              <a 
+                href="/main.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn-ghost"
+                download
+              >
+                Download Resume
+              </a>
               <a href="#contact" className="btn-ghost">
                 Contact
               </a>
@@ -102,13 +111,13 @@ export function Hero() {
               </div>
 
               <p className="mt-4 text-[15px] text-chalk-100 leading-snug text-balance">
-                Building <span className="text-accent-soft">neuro-symbolic</span>{" "}
-                systems and shipping a feedback platform with ANU.
+                Shipping an <span className="text-accent-soft">identification</span>{" "}
+                platform and a feedback dashboard with ANU.
               </p>
 
               <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 text-[12px]">
-                <Stat k="Focus" v="ML · Systems" />
-                <Stat k="Stack" v="PyTorch · CUDA" />
+                <Stat k="Focus" v="ML · Full-stack" />
+                <Stat k="Stack" v="PyTorch · React" />
                 <Stat k="Based" v="Canberra" />
                 <Stat k="Open to" v="Grad roles" />
               </div>

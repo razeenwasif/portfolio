@@ -19,14 +19,14 @@ export function About() {
           </div>
           <div className="lg:col-span-9">
             <h2 className="font-display font-light text-chalk-50 text-[32px] md:text-[44px] lg:text-[52px] leading-[1.05] tracking-tightish text-balance">
-              Physics-trained engineer working across ML, GPU systems,
-              <span className="text-accent-soft"> and product</span>.
+              Physics-trained engineer working across ML, distributed systems,
+              <span className="text-accent-soft"> and full-stack engineering</span>.
             </h2>
 
             <p className="mt-8 max-w-prose2 text-[16px] md:text-[17px] leading-relaxed text-chalk-300 text-balance">
-              I build things that need to be both fast and right — from custom
-              CUDA kernels and neuro-symbolic models to full-stack platforms
-              shipped on Power Platform and React.
+              I build things that need to be both fast and right — from
+              distributed training infrastructure and real-time data systems
+              to full-stack platforms shipped on React and Power Platform.
             </p>
 
             <ul className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-4 text-[13px]">

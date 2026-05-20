@@ -10,7 +10,7 @@ export const site = {
     kaggle: "https://www.kaggle.com/competitions/plantclef2026",
   },
   tagline:
-    "I build GPU-accelerated ML systems and full-stack products — from custom CUDA kernels to neuro-symbolic neural architectures.",
+    "I build full-stack products and ML systems — from training infrastructure to user-facing dashboards.",
 };
 
 export type Project = {
@@ -19,6 +19,7 @@ export type Project = {
   year: string;
   summary: string;
   stack: string[];
+  insights?: string[];
   links: { label: string; href: string }[];
 };
 
@@ -30,38 +31,55 @@ export const projects: Project[] = [
     summary:
       "GPU-first AutoML pipeline for tabular data with Optuna-tuned models, RAPIDS-accelerated entity resolution, and an Ollama-powered LLM for natural-language exploration.",
     stack: ["Python", "CUDA", "FastAPI", "React", "Docker"],
-    links: [{ label: "Source", href: "https://github.com/razeenwasif/Prism" }],
+    insights: ["10x faster inference", "99.2% matching precision", "Ollama LLM"],
+    links: [
+      { label: "Live", href: "https://prism-automl.web.app" },
+      { label: "Source", href: "https://github.com/razeenwasif/Prism" },
+    ],
   },
   {
     index: "02",
-    title: "Neuro-Symbolic Identification System",
+    title: "Oracle · Identification Platform",
     year: "2026",
     summary:
-      "PlantCLEF research system fusing a triple-ensemble vision backbone (BioCLIP 2.0, DINOv3, ConvNeXt) with an ecological GCN — solved as a CSP across 1.4M species combinations.",
-    stack: ["PyTorch", "Rust", "CUDA", "FP8", "GCN"],
+      "Multi-domain identification engine — BioCLIP 2.5 ViT-H/14 partial fine-tune with auxiliary genus / family / order / class heads, 4×4 tile inference ensembled across 224 and 336-pixel resolutions, logit-adjusted with adaptive thresholding. Validated on the PlantCLEF 2026 long-tail multi-label benchmark.",
+    stack: ["PyTorch", "BioCLIP", "React", "TypeScript", "Firebase"],
+    insights: ["0.418 Macro F1", "7,806-class long-tail", "Tile + multi-res ensemble"],
     links: [
-      {
-        label: "Kaggle",
-        href: "https://www.kaggle.com/competitions/plantclef2026",
-      },
+      { label: "Live", href: "https://oracle-neuro-sym.web.app" },
+      { label: "Paper", href: "https://oracle-neuro-sym.web.app/oracle_plantclef2026.pdf" },
     ],
   },
   {
     index: "03",
+    title: "Nexus · Distributed Training Console",
+    year: "2026",
+    summary:
+      "Production control plane and real-time monitoring console for distributed ML training. Firestore-backed pod inventory, run lifecycle, NCCL liveness probes, and per-rank telemetry rolled up live. Powers Oracle's training pipeline and is exposed to Pro-tier users for self-managed fine-tuning.",
+    stack: ["Python", "Firestore", "React", "TypeScript", "Firebase"],
+    insights: ["Real-time pod telemetry", "Multi-rank orchestration", "Live event console"],
+    links: [
+      { label: "Live", href: "https://oraclenexus.web.app" },
+    ],
+  },
+  {
+    index: "04",
     title: "GPU-Accelerated Kernel Subsystem",
     year: "2025",
     summary:
       "Linux kernel subsystem offloading AES-256 and regex matching to CUDA — 15× throughput over CPU baselines via pinned memory, unified memory, and a work-stealing scheduler.",
     stack: ["C++", "CUDA", "Linux", "Kernel"],
+    insights: ["15x throughput boost", "Zero-copy IO", "Custom CUDA kernels"],
     links: [{ label: "Source", href: "#" }],
   },
   {
-    index: "04",
+    index: "05",
     title: "Signal-Preserving TinyML for GW Triggers",
     year: "2025",
     summary:
       "Quantization-aware training and custom C++ kernels to run gravitational-wave detection on ARM Cortex-M under a 128 KB SRAM budget without losing SNR.",
     stack: ["C++", "TensorFlow", "QAT", "ARM"],
+    insights: ["128KB SRAM budget", "QAT optimization", "Real-time GW detection"],
     links: [
       {
         label: "Source",
@@ -70,12 +88,13 @@ export const projects: Project[] = [
     ],
   },
   {
-    index: "05",
+    index: "06",
     title: "16-Bit RISC CPU",
     year: "2024",
     summary:
       "Designed and simulated a 16-bit RISC processor from logic gates — custom ISA, multi-stage datapath, microprogrammed control unit, validated end-to-end on assembly programs.",
     stack: ["Digital Logic", "ISA", "ALU"],
+    insights: ["Custom ISA design", "Multi-stage datapath", "Assembly validated"],
     links: [
       {
         label: "Source",
@@ -84,12 +103,13 @@ export const projects: Project[] = [
     ],
   },
   {
-    index: "06",
+    index: "07",
     title: "Social Media Backend",
     year: "2024",
     summary:
       "Java backend for an Android social app — custom AVL tree for O(log n) reactions at 1M ops/sec, leet-speak censorship facade, and a tight persistence layer at <40 bytes/record.",
     stack: ["Java", "DSA", "JUnit", "DAO"],
+    insights: ["1M ops/sec scale", "Custom AVL trees", "<40B record density"],
     links: [
       {
         label: "Source",
