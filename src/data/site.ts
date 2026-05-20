@@ -26,7 +26,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     index: "01",
-    title: "Prism",
+    title: "Prism · AutoML Workbench",
     year: "2025",
     summary:
       "GPU-first AutoML pipeline for tabular data with Optuna-tuned models, RAPIDS-accelerated entity resolution, and an Ollama-powered LLM for natural-language exploration.",
