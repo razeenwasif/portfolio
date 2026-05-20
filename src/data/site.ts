@@ -55,11 +55,11 @@ export const projects: Project[] = [
     title: "Nexus · Distributed Training Console",
     year: "2026",
     summary:
-      "Production control plane and real-time monitoring console for distributed ML training. Firestore-backed pod inventory, run lifecycle, NCCL liveness probes, and per-rank telemetry rolled up live. Powers Oracle's training pipeline and is exposed to Pro-tier users for self-managed fine-tuning.",
+      "Standalone control plane and real-time monitoring console for distributed ML training. Firestore-backed pod inventory, run lifecycle, NCCL liveness probes, and per-rank telemetry rolled up live in a monochrome glass shell. Self-contained product with its own backend and brand.",
     stack: ["Python", "Firestore", "React", "TypeScript", "Firebase"],
     insights: ["Real-time pod telemetry", "Multi-rank orchestration", "Live event console"],
     links: [
-      { label: "Live", href: "https://oraclenexus.web.app" },
+      { label: "Live", href: "https://nexus-cluster.web.app" },
     ],
   },
   {
