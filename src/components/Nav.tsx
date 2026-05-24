@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const links = [
   { href: "#work", label: "Work" },
+  { href: "#research", label: "Research" },
   { href: "#about", label: "About" },
   { href: "#stack", label: "Stack" },
   { href: "#contact", label: "Contact" },
@@ -52,6 +53,17 @@ export function Nav() {
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href="/main.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors duration-300 ease-soft hover:text-chalk-50"
+                download
+              >
+                Resume
+              </a>
+            </li>
           </ul>
 
           <a

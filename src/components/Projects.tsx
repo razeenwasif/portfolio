@@ -37,10 +37,7 @@ function ProjectRow({ project, delay }: { project: Project; delay: number }) {
       className="reveal group relative"
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <a
-        href={project.links[0]?.href ?? "#"}
-        className="grid grid-cols-12 items-baseline gap-6 py-7 md:py-9 px-2 -mx-2 rounded-tokenLg transition-colors duration-500 ease-soft hover:bg-white/[0.02]"
-      >
+      <div className="grid grid-cols-12 items-baseline gap-6 py-7 md:py-9 px-2 -mx-2 rounded-tokenLg transition-colors duration-500 ease-soft hover:bg-white/[0.02]">
         <span className="col-span-1 font-mono text-[12px] text-chalk-500 group-hover:text-accent-soft transition-colors duration-500 ease-soft">
           {project.index}
         </span>
@@ -49,9 +46,22 @@ function ProjectRow({ project, delay }: { project: Project; delay: number }) {
           <h3 className="font-display font-light text-chalk-50 text-[24px] md:text-[34px] lg:text-[40px] leading-tight tracking-tightish transition-transform duration-500 ease-soft group-hover:-translate-y-0.5">
             {project.title}
           </h3>
-          <p className="mt-2 text-[14px] md:text-[15px] text-chalk-300 max-w-prose2 text-balance">
+          <p className="mt-2 text-[14px] md:text-[15px] text-chalk-300 max-w-prose2 text-balance leading-relaxed">
             {project.summary}
           </p>
+          
+          {project.insights && (
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 border-l border-white/10 pl-5">
+              {project.insights.map((insight) => (
+                <div key={insight} className="flex items-center gap-2">
+                  <span className="h-1 w-1 rounded-full bg-accent/60" />
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-chalk-400">
+                    {insight}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="col-span-12 sm:col-span-3 md:col-span-3 flex flex-wrap gap-1.5 sm:justify-start">
@@ -65,24 +75,34 @@ function ProjectRow({ project, delay }: { project: Project; delay: number }) {
           ))}
         </div>
 
-        <div className="col-span-12 sm:col-span-1 md:col-span-2 flex sm:justify-end items-center gap-3 text-[12px] font-mono text-chalk-400">
-          <span>{project.year}</span>
-          <span
-            aria-hidden
-            className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 text-chalk-200 transition-all duration-500 ease-soft group-hover:border-accent/50 group-hover:text-accent-soft group-hover:translate-x-0.5"
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M7 17 17 7m0 0H8m9 0v9"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
+        <div className="col-span-12 sm:col-span-1 md:col-span-2 flex flex-col sm:items-end justify-center gap-4">
+          <div className="text-[12px] font-mono text-chalk-400">
+            {project.year}
+          </div>
+          <div className="flex flex-wrap sm:justify-end gap-3">
+            {project.links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 items-center gap-2 px-4 rounded-full border border-white/10 text-[11px] font-mono text-chalk-200 transition-all duration-300 hover:bg-white/10 hover:border-accent-soft hover:text-accent-soft whitespace-nowrap"
+              >
+                {link.label}
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M7 17 17 7m0 0H8m9 0v9"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
+            ))}
+          </div>
         </div>
-      </a>
+      </div>
     </li>
   );
 }

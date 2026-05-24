@@ -64,6 +64,18 @@ export const projects: Project[] = [
   },
   {
     index: "04",
+    title: "Council · Multi-Model Coding Agent",
+    year: "2026",
+    summary:
+      "Seven-member AI council layered on a coding CLI — Architect, Implementer, Skeptic, Critic, Tester, Security, and Performance lenses propose in parallel, a synthesizer reduces to one plan, a single executor writes the diff, and the council votes pass/nit/concern/block with one revision pass on three or more blocks.",
+    stack: ["TypeScript", "Bun", "Node.js", "Multi-model"],
+    insights: ["7 parallel role lenses", "Single executor diff", "Vote-gated revision"],
+    links: [
+      { label: "Source", href: "https://github.com/razeenwasif/Council" },
+    ],
+  },
+  {
+    index: "05",
     title: "GPU-Accelerated Kernel Subsystem",
     year: "2025",
     summary:
@@ -71,21 +83,6 @@ export const projects: Project[] = [
     stack: ["C++", "CUDA", "Linux", "Kernel"],
     insights: ["15x throughput boost", "Zero-copy IO", "Custom CUDA kernels"],
     links: [{ label: "Source", href: "#" }],
-  },
-  {
-    index: "05",
-    title: "Signal-Preserving TinyML for GW Triggers",
-    year: "2025",
-    summary:
-      "Quantization-aware training and custom C++ kernels to run gravitational-wave detection on ARM Cortex-M under a 128 KB SRAM budget without losing SNR.",
-    stack: ["C++", "TensorFlow", "QAT", "ARM"],
-    insights: ["128KB SRAM budget", "QAT optimization", "Real-time GW detection"],
-    links: [
-      {
-        label: "Source",
-        href: "https://github.com/razeenwasif/TinyML-Quantization_Induced_GW_SNR_Degradation",
-      },
-    ],
   },
   {
     index: "06",
@@ -132,6 +129,62 @@ export const stack = {
     "React",
   ],
 };
+
+export type Research = {
+  index: string;
+  title: string;
+  venue: string;
+  year: string;
+  status: string;
+  summary: string;
+  contribution?: string[];
+  links: { label: string; href: string }[];
+};
+
+export const research: Research[] = [
+  {
+    index: "01",
+    title:
+      "Partial Fine-Tuning of BioCLIP 2.5 with Taxonomic Auxiliary Heads for Multi-Label Plant Species Identification in Vegetation Plots: ANU at PlantCLEF 2026",
+    venue: "PlantCLEF 2026 · LifeCLEF / CLEF",
+    year: "2026",
+    status: "Submitted",
+    summary:
+      "BioCLIP 2.5 ViT-H/14 partial fine-tune with auxiliary genus / family / order / class heads, 4×4 tile inference ensembled across 224 and 336-pixel resolutions, and logit-adjusted adaptive thresholding for the 7,806-class long-tail multi-label benchmark.",
+    contribution: [
+      "0.418 Macro F1",
+      "Taxonomy-aware auxiliary heads",
+      "Tile + multi-resolution ensemble",
+    ],
+    links: [
+      { label: "Paper", href: "/plantclef-2026.pdf" },
+      { label: "Source", href: "https://github.com/ManindraDeMel/PlantCLEF2026" },
+    ],
+  },
+  {
+    index: "02",
+    title:
+      "Signal-Preserving Quantization for Gravitational-Wave Triggers",
+    venue: "ANU Honours · TinyML / Astrophysics",
+    year: "2026",
+    status: "In progress",
+    summary:
+      "Quantifies how INT8 quantization interferes with the phase coherence of LIGO chirp signals, and tests a signal-fidelity-first optimization framework (QAT + custom C++ kernels) for ARM Cortex-M edge deployment under a <128 KB SRAM budget.",
+    contribution: [
+      "<5% SNR-loss target",
+      "FAR 10⁻⁴ Hz edge filter",
+      "8× memory reduction",
+    ],
+    links: [
+      { label: "Paper", href: "/tinyml-gw.pdf" },
+      { label: "Lit Review", href: "/tinyml-gw-litreview.pdf" },
+      {
+        label: "Source",
+        href: "https://github.com/razeenwasif/TinyML-Quantization_Induced_GW_SNR_Degradation",
+      },
+    ],
+  },
+];
 
 export type TimelineEntry = {
   year: string;
