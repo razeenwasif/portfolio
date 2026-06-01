@@ -277,18 +277,17 @@
     \end{onecolentry}
 
     \begin{twocolentry}{
-        \href{}{Github}
+        \href{https://oracle-neuro-sym.web.app/}{Live}
     }
-        \textbf{High-Throughput GPU-Accelerated Kernel Subsystem}
+        \textbf{Oracle: Multi-Domain Identification Platform}
     \end{twocolentry}
-    
+
     \vspace{0.05 cm}
     \begin{onecolentry}
         \begin{highlights}
-            \item Engineered a Linux Kernel Subsystem that offloads compute-intensive tasks (AES-256 encryption, regex pattern matching) to CUDA kernels, achieving a 15× throughput increase over CPU-bound baselines.
-            \item Implemented Pinned Memory (Zero-Copy) and Unified Memory architectures to minimise PCIe transfer overhead between the host filesystem and GPU VRAM.
-            \item Developed a Work-Stealing Scheduler in C++ to manage concurrent GPU streams, ensuring non-blocking I/O and high CUDA core utilisation during massive packet filtering bursts.
-            \item Optimised warp-level primitives and bit-manipulation kernels for parallel encryption of 4KB disk blocks, maintaining strict data integrity and sub-millisecond latency.
+            \item Engineered a live multi-domain identification platform that productizes the \textbf{BioCLIP 2.5} PlantCLEF model — image upload, top-k predictions with taxonomy context, served via a \textbf{React + TypeScript + Firebase} front end.
+            \item Implemented the inference path with \textbf{4$\times$4 tile decomposition} and multi-resolution (224 / 336 px) ensembling, with logit-adjusted adaptive thresholding tuned for long-tail multi-label outputs.
+            \item Validated end-to-end on the \textbf{PlantCLEF 2026} benchmark (7,806-class long-tail), reaching \textbf{0.418 Macro F1} on the held-out vegetation-plot test set.
         \end{highlights}
     \end{onecolentry}
 
