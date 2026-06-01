@@ -1,0 +1,493 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=1.3 cm, % seperation between body and page edge from the top
+    bottom=1.3 cm, % seperation between body and page edge from the bottom
+    left=1.6 cm, % seperation between body and page edge from the left
+    right=1.6 cm, % seperation between body and page edge from the right
+    footskip=0.6 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 79, 144} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Razeen Wasif's CV},
+    pdfauthor={Razeen Wasif},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    % \usepackage[T1]{fontenc} % this breaks sb2nov
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+
+
+% Some settings:
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0cm} % set column seperation
+\makeatletter
+\let\ps@customFooterStyle\ps@plain % Copy the plain style to customFooterStyle
+\patchcmd{\ps@customFooterStyle}{\thepage}{
+    \color{gray}\textit{\small Razeen Wasif - Page \thepage{} of \pageref*{LastPage}}
+}{}{} % replace number by desired string
+\makeatother
+\pagestyle{customFooterStyle}
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.2 cm
+}{
+    % bottom space:
+    0.1 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\circ$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.03 cm,
+        parsep=0.03 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0.4 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.03 cm,
+        parsep=0.03 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0.2 cm + 0.00001 cm
+    }{
+        0.2 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+}{
+    \hfill \secondColumn
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.25}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0.2 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{}\hspace{\widthof{}}
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
+
+% =========================================================
+% =========================================================
+% =========================================================
+% =========================================================
+% =========================================================
+% =========================================================
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{}
+
+    \placelastupdatedtext
+    \begin{header}
+        \textbf{\fontsize{24 pt}{24 pt}\selectfont Razeen Wasif}
+
+        \vspace{0.1 cm}
+
+        \normalsize
+        
+        \mbox{{\color{black}\footnotesize\faMapMarker*}\hspace*{0.13cm}Canberra}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{mailto:razeen.wasif66@gmail.com}{\color{black}{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}razeen.wasif66@gmail.com}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{tel:0450004709}{\color{black}{\footnotesize\faPhone*}\hspace*{0.13cm}0450004709}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://linkedin.com/in/razeenwasif}{\color{black}{\footnotesize\faLinkedinIn}\hspace*{0.13cm}Razeen Wasif}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://github.com/razeenwasif}{\color{black}
+        {\footnotesize\faGithub}\hspace*
+        {0.13cm}razeenwasif}}%
+        \kern 0.25 cm%
+        % \AND%
+        % \kern 0.25 cm%
+        % \mbox{\hrefWithoutArrow{https://yourwebsite.com/}{\color{black}{\footnotesize\faLink}\hspace*
+        % {0.13cm}yourwebsite.com}}%
+        
+
+    \end{header}
+
+    \vspace{0.1 cm}
+    \begin{center}
+        \textbf{\large Summary}
+    \end{center}
+
+    \begin{onecolentry}
+        \begin{center}
+            Software Engineer \& ML Researcher with a strong foundation in \textbf{AI, machine learning,} and \textbf{software construction}. My background in physics provides a rigorous analytical and quantitative approach to problem-solving. Experienced in designing and implementing AI models, building \textbf{training infrastructure}, and shipping \textbf{full-stack platforms} using \textbf{Python, C++, CUDA,} and \textbf{TypeScript}.
+        \end{center}
+    \end{onecolentry}
+
+    \columnratio{0.64,0.36}
+    \begin{paracol}{2}
+    \setlength{\columnsep}{0.6 cm}
+
+    \section{Professional Experience}
+
+    \begin{twocolentry}{
+        Feb 2026 -- Present
+    }
+        \textbf{ANU Virtuous Loop} \\
+        \textit{Full-Stack Developer \& UX Lead}
+    \end{twocolentry}
+
+    \vspace{0.10 cm}
+    \begin{onecolentry}
+        \begin{highlights}
+            \item Collaborating with an industry client to architect a robust, scalable feedback dashboard using the \textbf{Microsoft Power Platform (Power Apps, Power BI, and Dataverse)}.
+            \item Spearheading a complete \textbf{UI/UX overhaul} by conducting user research and wireframing, resulting in a 40\% improvement in navigation efficiency and data accessibility.
+            \item Engineering automated data pipelines with \textbf{Power Automate} to replace legacy manual processes, ensuring real-time feedback synchronization and system reliability.
+            \item Implementing \textbf{Row-Level Security (RLS)} and enterprise-grade data validation logic to ensure the platform meets ANU's strict privacy and compliance standards.
+            \item Managing the full \textbf{Software Development Life Cycle (SDLC)} in an Agile environment, including stakeholder requirement gathering, sprint planning, and client demonstrations.
+        \end{highlights}
+    \end{onecolentry}
+
+    \section{Projects}
+
+    \begin{twocolentry}{
+        \href{https://github.com/razeenwasif/Prism}{Github}
+    }
+        \textbf{Prism: GPU-Accelerated AutoML \& Entity Resolution Engine}
+    \end{twocolentry}
+    
+    \vspace{0.05 cm}
+    \begin{onecolentry}
+        \begin{highlights}
+            \item Engineered a GPU-first AutoML pipeline for heterogeneous tabular data, featuring automated EDA, target-aware cleaning, and Optuna-powered hyperparameter optimisation.
+            \item Architected a microservices stack using Docker Compose, orchestrating FastAPI backends, a React/Vite frontend, and an Ollama-based LLM server for natural language data exploration.
+            \item Integrated a RAPIDS-accelerated record linkage workflow for entity resolution, utilising asynchronous execution and semantic embeddings to maximise candidate pair recall.
+            \item Developed custom CUDA-backed XGBoost and PyTorch model wrappers with automated hardware fallback (CUDA/MPS/CPU), optimising training throughput for large-scale datasets.
+        \end{highlights}
+    \end{onecolentry}
+
+    \begin{twocolentry}{
+        \href{https://nexus-cluster.web.app}{Live}
+    }
+        \textbf{Nexus: Distributed Training Console}
+    \end{twocolentry}
+
+    \vspace{0.05 cm}
+    \begin{onecolentry}
+        \begin{highlights}
+            \item Architected a standalone control plane and real-time monitoring console for distributed ML training, with a self-contained backend, brand, and deployment surface.
+            \item Built a \textbf{Firestore-backed} pod inventory and run-lifecycle model, surfacing NCCL liveness probes and per-rank telemetry rolled up live in a monochrome glass shell.
+            \item Designed a streaming event console for multi-rank orchestration, exposing per-step throughput, gradient norms, and rank-level failures without polling.
+            \item Shipped on \textbf{React + TypeScript + Firebase} with a Python ingestion service, separating the operator UI from the training cluster's runtime.
+        \end{highlights}
+    \end{onecolentry}
+
+    \begin{twocolentry}{
+        \href{https://github.com/razeenwasif/Council}{Github}
+    }
+        \textbf{Council: Multi-Model Coding Agent}
+    \end{twocolentry}
+
+    \vspace{0.05 cm}
+    \begin{onecolentry}
+        \begin{highlights}
+            \item Designed a seven-member AI council layered on a coding CLI — \textbf{Architect, Implementer, Skeptic, Critic, Tester, Security,} and \textbf{Performance} lenses propose in parallel before a synthesizer reduces to a single plan.
+            \item Implemented a single-executor diff pipeline so only one role writes code while the others vote \textbf{pass / nit / concern / block}, with a single revision pass triggered on three or more blocks.
+            \item Built the runtime in \textbf{TypeScript on Bun / Node.js} with a multi-model backend, fanning out role prompts in parallel and aggregating structured votes for gating.
+        \end{highlights}
+    \end{onecolentry}
+
+    \begin{twocolentry}{
+        \href{}{Github}
+    }
+        \textbf{High-Throughput GPU-Accelerated Kernel Subsystem}
+    \end{twocolentry}
+    
+    \vspace{0.05 cm}
+    \begin{onecolentry}
+        \begin{highlights}
+            \item Engineered a Linux Kernel Subsystem that offloads compute-intensive tasks (AES-256 encryption, regex pattern matching) to CUDA kernels, achieving a 15× throughput increase over CPU-bound baselines.
+            \item Implemented Pinned Memory (Zero-Copy) and Unified Memory architectures to minimise PCIe transfer overhead between the host filesystem and GPU VRAM.
+            \item Developed a Work-Stealing Scheduler in C++ to manage concurrent GPU streams, ensuring non-blocking I/O and high CUDA core utilisation during massive packet filtering bursts.
+            \item Optimised warp-level primitives and bit-manipulation kernels for parallel encryption of 4KB disk blocks, maintaining strict data integrity and sub-millisecond latency.
+        \end{highlights}
+    \end{onecolentry}
+
+    \begin{twocolentry}{
+        \href{https://github.com/razeenwasif/Comp-Architecture/tree/main/16-bit-cpu}{github}
+    }
+        \textbf{Custom 16-Bit RISC CPU Design \& Implementation}
+    \end{twocolentry}
+
+    \vspace{0.05 cm}
+    \begin{onecolentry}
+        \begin{highlights}
+            \item Designed and simulated a fully functional \textbf{16-bit RISC processor} from basic logic gates, featuring a custom Instruction Set Architecture (ISA) with support for arithmetic, logic, and control-flow operations.
+            \item Engineered a \textbf{Multi-Stage Datapath} incorporating an Arithmetic Logic Unit (ALU), a Register File, and a microprogrammed \textbf{Control Unit} to handle complex instruction decoding and execution cycles.
+            \item Optimized memory management by implementing a 16-bit address bus with dedicated **Program Counter (PC)** and **Instruction Registers (IR)**, facilitating efficient fetch-decode-execute loops.
+            \item Validated hardware logic through rigorous unit testing of individual components (ALU, MUX, Decoders) and end-to-end simulation of assembly-level programs (e.g., Fibonacci, array traversal).
+        \end{highlights}
+    \end{onecolentry}
+
+        % \begin{twocolentry}{
+        % \href{https://github.com/razeenwasif/Machine_Learning/tree/main/Stable-Diffusion}{github}   
+        % \textit{}}
+        %     \textbf{Stable Diffusion model}
+        %     \textit{}
+        % \end{twocolentry}
+        % \vspace{0.05 cm}
+        % \begin{onecolentry}
+        %     \begin{highlights}
+        %         \item This project is an implementation of the Stable Diffusion text-to-image model from scratch using PyTorch. The implementation focuses on building the core parts of the architecture, including VAE, U-Net, text encoder and noise scheduler.
+        %     \end{highlights}
+        % \end{onecolentry}
+
+        \begin{twocolentry}{
+        \href{https://github.com/razeenwasif/Software-Development/tree/main/social-media}{github}    
+        \textit{}}
+            \textbf{High-Performance Social Media Backend \& Mobile Application}
+            \textit{}
+        \end{twocolentry}
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed a scalable Java-based backend for an Android social media application, implementing complex features like real-time message reactions, search, and content moderation.
+                \item Engineered a custom \textbf{AVL Tree} data structure from scratch to ensure $O(\log n)$ performance for data retrieval, meeting strict latency requirements (1M operations/sec) for reaction processing.
+                \item Designed a robust \textbf{Censorship Facade} with \textbf{Leet Speak decoding} and pattern matching to identify and filter profanity through custom normalization algorithms.
+                \item Leveraged advanced \textbf{Design Patterns} including \textbf{DAO, Singleton, Factory, and Template} to build a modular, extensible, and SOLID-compliant architecture.
+                \item Optimized a \textbf{persistence layer} using JSON and binary formats, achieving high space efficiency ($<$40 bytes/record) and high-speed I/O (100k records/sec).
+                \item Refactored legacy codebases to eliminate code smells and improve maintainability, achieving high statement coverage through \textbf{JUnit parameterized and black-box testing}.
+            \end{highlights}
+        \end{onecolentry}
+
+    \switchcolumn
+
+
+    \section{Education}
+
+        
+        \begin{onecolentry}
+            \textbf{Australian National University}
+
+            \textit{Bachelor of Advanced Computing (Honors)}
+        \end{onecolentry}
+
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item \textbf{Coursework:} Machine Learning, Artificial Intelligence, Computer Vision, Software Engineering, Computer Architecture, Algorithms and Data structures, Data analysis
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.05 cm}
+
+    % =========================================================
+    % =========================================================
+    % =========================================================
+
+
+    \section{Open Source Contributions}
+
+        \begin{onecolentry}
+            \textbf{Pygame Library} (\hrefWithoutArrow{https://github.com/pygame/pygame}{GitHub})
+        \end{onecolentry}
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Identified and resolved a critical \textbf{segmentation fault} within the \texttt{PixelArray} module, enhancing library stability.
+                \item Debugged memory management issues in the \textbf{C-based backend} of the library to prevent invalid memory access during array slicing operations.
+            \end{highlights}
+        \end{onecolentry}
+
+    % =========================================================
+    % =========================================================
+    % =========================================================
+
+   \section{Research}
+        
+        \begin{twocolentry}{
+        \href{https://www.kaggle.com/competitions/plantclef2026}{Kaggle}
+        }
+            \textbf{Partial Fine-Tuning of BioCLIP 2.5 for Multi-Label Plant ID (PlantCLEF 2026)}
+        \end{twocolentry}
+
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Partial fine-tune of \textbf{BioCLIP 2.5 ViT-H/14} with auxiliary \textbf{genus / family / order / class} heads, injecting taxonomic structure into the loss to stabilise training on a 7,806-class long-tail benchmark.
+                \item Engineered a \textbf{4$\times$4 tile inference} pipeline ensembled across \textbf{224 and 336-pixel} resolutions, with \textbf{logit-adjusted adaptive thresholding} per class to handle multi-label vegetation plots.
+                \item Achieved \textbf{0.418 Macro F1} on the PlantCLEF 2026 leaderboard; paper submitted to \textbf{LifeCLEF / CLEF 2026} (ANU at PlantCLEF 2026).
+            \end{highlights}
+        \end{onecolentry}
+
+    \vspace{0.1 cm}
+
+        \begin{twocolentry}{
+        \href{https://github.com/razeenwasif/TinyML-Quantization_Induced_GW_SNR_Degradation}{github}
+        }
+            \textbf{Signal-Preserving TinyML for Gravitational Wave Triggers}
+        \end{twocolentry}
+
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Investigated the impact of \textbf{INT8 quantization} on phase-coherence in Gravitational Wave (GW) signals for deployment on ultra-low-power \textbf{ARM Cortex-M} hardware.
+                \item Developed a "Signal-Preserving" framework using \textbf{Quantization-Aware Training (QAT)} and Hardware-Aware Distillation to minimize SNR loss in stochastic astrophysical data.
+                \item Engineered custom \textbf{C++ inference kernels} to bypass TensorFlow Lite Micro overhead, optimizing for high-frequency (4096 Hz) strain data within a \textbf{<128KB SRAM} budget.
+                \item Balanced sensitivity against False Alarm Rates to achieve over 99\% data compression on edge devices for autonomous astronomical sensors.
+            \end{highlights}
+        \end{onecolentry}
+        
+    % =========================================================
+    % =========================================================
+    % =========================================================
+
+    
+
+    
+    \section{Technologies}
+
+        \begin{onecolentry}
+            % Rust, Ruby, Haskell
+            \textbf{Languages:} Python, C++, CUDA, Java, TypeScript, ARM ASM, SQL \end{onecolentry}
+
+        \vspace{0.1 cm}
+
+        \begin{onecolentry}
+            \textbf{ML / AI:} PyTorch, TensorFlow, Optuna, RAPIDS, BioCLIP, DINOv3 \end{onecolentry}
+
+        \vspace{0.1 cm}
+
+        \begin{onecolentry}
+            \textbf{Systems:} Linux Kernel, TensorRT, NVIDIA DALI, FastAPI, Docker \end{onecolentry}
+
+        \vspace{0.1 cm}
+
+        \begin{onecolentry}
+            \textbf{Platforms:} Microsoft Power Platform, Power BI, Dataverse, Firebase, Figma, React \end{onecolentry}
+
+    % =========================================================
+    % =========================================================
+    % =========================================================
+    % =========================================================
+    % =========================================================
+    % =========================================================
+
+    \section{Certifications}
+        
+        
+            \begin{onecolentry}
+                \textbf{Deloitte Australia Technology Job Simulation}\newline
+                \textit{Forage} \hfill \textit{Aug 2024}
+            \end{onecolentry}
+            \begin{onecolentry}
+                \vspace{0.05 cm}
+                \begin{itemize}
+                    \item Completed a job simulation involving data analysis for Deloitte's Technology team. Created a data dashboard using Tableau. Wrote a proposal for a client project to create a functioning dashboard. Used Excel to classify data and draw business conclusions
+                \end{itemize}
+            \vspace{0.05 cm}
+            \end{onecolentry}
+
+             \begin{onecolentry}
+                \textbf{Study Australia Industry Experience Program}\newline
+                \textit{Practera} \hfill \textit{July 2025}
+            \end{onecolentry}
+            \begin{onecolentry}
+                \vspace{0.05 cm}
+                \begin{itemize}
+                    \item Applied digital marketing and SEO best practices to develop a comprehensive strategy for a real estate startup, including competitor analysis and video automation recommendations.
+                \end{itemize}
+            \vspace{0.05 cm}
+            \end{onecolentry}
+            
+    % =========================================================
+    % =========================================================
+    % =========================================================
+    % =========================================================
+    % =========================================================
+    % =========================================================
+
+
+
+    \end{paracol}
+
+\end{document}
