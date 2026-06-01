@@ -31,3 +31,14 @@ dist-ssr
 # OS / WSL artifacts
 *:Zone.Identifier
 Thumbs.db
+
+# Firebase deploy cache
+.firebase/
+
+# Local agent/IDE config
+.gemini/
+
+# LaTeX build artifacts (root only — public/main.pdf is intentional)
+/main.pdf
+/main.aux
+/main.out
