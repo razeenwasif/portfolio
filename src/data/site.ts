@@ -76,6 +76,42 @@ export const projects: Project[] = [
   },
   {
     index: "05",
+    title: "Onyx · Markdown Notes TUI",
+    year: "2026",
+    summary:
+      "Obsidian-inspired terminal vault for markdown notes — Ratatui-based live preview, [[wikilinks]] with backlinks and outline panels, command palette and quick switcher, full-vault content search, ASCII graph view, daily-notes calendar, and vim-style modal editing in the editor pane.",
+    stack: ["Rust", "Ratatui", "Crossterm", "Markdown"],
+    insights: ["Wikilinks + backlinks", "ASCII graph view", "Vim modal editor"],
+    links: [
+      { label: "Source", href: "https://github.com/razeenwasif/onyx" },
+    ],
+  },
+  {
+    index: "06",
+    title: "AudioPulse · Spotify-Style TUI Player",
+    year: "2026",
+    summary:
+      "Bubble Tea TUI music player with a Spotify desktop-style layout. Plays full songs through an embedded librespot device controlled via the Spotify Web API (PKCE OAuth), with a no-login Deezer guest mode for 30-second previews and album art rendered in the terminal as 24-bit half-blocks.",
+    stack: ["Go", "Bubble Tea", "librespot", "Spotify API"],
+    insights: ["Full-song playback", "PKCE OAuth", "Album art in-terminal"],
+    links: [
+      { label: "Source", href: "https://github.com/razeenwasif/audiopulse" },
+    ],
+  },
+  {
+    index: "07",
+    title: "BoxTube · Terminal YouTube Client",
+    year: "2026",
+    summary:
+      "Textual-based TUI YouTube client — search, sign in to browse subscriptions, history, liked, watch later, and playlists, with inline thumbnails and full video playback rendered inside the terminal via mpv and the kitty graphics protocol (with sixel and unicode fallbacks). No Google API key required.",
+    stack: ["Python", "Textual", "yt-dlp", "mpv"],
+    insights: ["In-terminal video", "Kitty graphics protocol", "No API key"],
+    links: [
+      { label: "Source", href: "https://github.com/razeenwasif/boxtube-tui" },
+    ],
+  },
+  {
+    index: "08",
     title: "GPU-Accelerated Kernel Subsystem",
     year: "2025",
     summary:
@@ -85,7 +121,7 @@ export const projects: Project[] = [
     links: [{ label: "Source", href: "#" }],
   },
   {
-    index: "06",
+    index: "09",
     title: "16-Bit RISC CPU",
     year: "2024",
     summary:
@@ -100,7 +136,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    index: "07",
+    index: "10",
     title: "Social Media Backend",
     year: "2024",
     summary:
