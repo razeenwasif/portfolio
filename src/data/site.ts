@@ -64,18 +64,6 @@ export const projects: Project[] = [
   },
   {
     index: "04",
-    title: "Council · Multi-Model Coding Agent",
-    year: "2026",
-    summary:
-      "Seven-member AI council layered on a coding CLI — Architect, Implementer, Skeptic, Critic, Tester, Security, and Performance lenses propose in parallel, a synthesizer reduces to one plan, a single executor writes the diff, and the council votes pass/nit/concern/block with one revision pass on three or more blocks.",
-    stack: ["TypeScript", "Bun", "Node.js", "Multi-model"],
-    insights: ["7 parallel role lenses", "Single executor diff", "Vote-gated revision"],
-    links: [
-      { label: "Source", href: "https://github.com/razeenwasif/Council" },
-    ],
-  },
-  {
-    index: "05",
     title: "Onyx · Markdown Notes TUI",
     year: "2026",
     summary:
@@ -87,7 +75,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    index: "06",
+    index: "05",
     title: "AudioPulse · Spotify-Style TUI Player",
     year: "2026",
     summary:
@@ -99,7 +87,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    index: "07",
+    index: "06",
     title: "BoxTube · Terminal YouTube Client",
     year: "2026",
     summary:
@@ -111,7 +99,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    index: "08",
+    index: "07",
     title: "GPU-Accelerated Kernel Subsystem",
     year: "2025",
     summary:
@@ -121,7 +109,7 @@ export const projects: Project[] = [
     links: [{ label: "Source", href: "#" }],
   },
   {
-    index: "09",
+    index: "08",
     title: "16-Bit RISC CPU",
     year: "2024",
     summary:
@@ -132,21 +120,6 @@ export const projects: Project[] = [
       {
         label: "Source",
         href: "https://github.com/razeenwasif/Comp-Architecture/tree/main/16-bit-cpu",
-      },
-    ],
-  },
-  {
-    index: "10",
-    title: "Social Media Backend",
-    year: "2024",
-    summary:
-      "Java backend for an Android social app — custom AVL tree for O(log n) reactions at 1M ops/sec, leet-speak censorship facade, and a tight persistence layer at <40 bytes/record.",
-    stack: ["Java", "DSA", "JUnit", "DAO"],
-    insights: ["1M ops/sec scale", "Custom AVL trees", "<40B record density"],
-    links: [
-      {
-        label: "Source",
-        href: "https://github.com/razeenwasif/Software-Development/tree/main/social-media",
       },
     ],
   },
@@ -181,6 +154,24 @@ export const research: Research[] = [
   {
     index: "01",
     title:
+      "Quantized Domain-Specialist Verifiers for Multi-Agent LLM Scientific Reasoning",
+    venue: "NeurIPS ENLSP / ICLR ME-FoMo / ICML AI4Science 2026 (target)",
+    year: "2026",
+    status: "In progress",
+    summary:
+      "Hybrid architecture where frontier API models drive multi-agent debate (Council /discover) and locally-hosted, fine-tuned, aggressively-quantized open-weights models act as a domain-specialist verification layer — auditing domain-specific claims that frontier voices systematically miss. Single-GPU LoRA+DoRA+QLoRA pipeline on Mistral-7B-Instruct-v0.3 producing physics/math/CS specialists, trained partly on Council-generated synthetic debate data.",
+    contribution: [
+      "Specialist-as-verifier architecture",
+      "PTQ vs QAT quantization curve (FP16→Q2)",
+      "Council-bootstrapped training data",
+    ],
+    links: [
+      { label: "Source", href: "https://github.com/razeenwasif/Council" },
+    ],
+  },
+  {
+    index: "02",
+    title:
       "Partial Fine-Tuning of BioCLIP 2.5 with Taxonomic Auxiliary Heads for Multi-Label Plant Species Identification in Vegetation Plots: ANU at PlantCLEF 2026",
     venue: "PlantCLEF 2026 · LifeCLEF / CLEF",
     year: "2026",
@@ -198,7 +189,7 @@ export const research: Research[] = [
     ],
   },
   {
-    index: "02",
+    index: "03",
     title:
       "Signal-Preserving Quantization for Gravitational-Wave Triggers",
     venue: "ANU Honours · TinyML / Astrophysics",

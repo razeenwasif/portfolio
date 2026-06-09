@@ -219,11 +219,10 @@
     \vspace{0.10 cm}
     \begin{onecolentry}
         \begin{highlights}
-            \item Collaborating with an industry client to architect a robust, scalable feedback dashboard using the \textbf{Microsoft Power Platform (Power Apps, Power BI, and Dataverse)}.
-            \item Spearheading a complete \textbf{UI/UX overhaul} by conducting user research and wireframing, resulting in a 40\% improvement in navigation efficiency and data accessibility.
-            \item Engineering automated data pipelines with \textbf{Power Automate} to replace legacy manual processes, ensuring real-time feedback synchronization and system reliability.
-            \item Implementing \textbf{Row-Level Security (RLS)} and enterprise-grade data validation logic to ensure the platform meets ANU's strict privacy and compliance standards.
-            \item Managing the full \textbf{Software Development Life Cycle (SDLC)} in an Agile environment, including stakeholder requirement gathering, sprint planning, and client demonstrations.
+            \item Collaborating with an industry client to architect a scalable feedback dashboard on the \textbf{Microsoft Power Platform (Power Apps, Power BI, Dataverse)}.
+            \item Spearheading a complete \textbf{UI/UX overhaul} (user research + wireframing), lifting navigation efficiency and data accessibility by 40\%.
+            \item Engineering automated \textbf{Power Automate} pipelines to replace legacy manual processes with real-time feedback sync.
+            \item Implementing \textbf{Row-Level Security (RLS)} and enterprise data validation to meet ANU's privacy and compliance standards.
         \end{highlights}
     \end{onecolentry}
 
@@ -238,10 +237,9 @@
     \vspace{0.05 cm}
     \begin{onecolentry}
         \begin{highlights}
-            \item Engineered a GPU-first AutoML pipeline for heterogeneous tabular data, featuring automated EDA, target-aware cleaning, and Optuna-powered hyperparameter optimisation.
-            \item Architected a microservices stack using Docker Compose, orchestrating FastAPI backends, a React/Vite frontend, and an Ollama-based LLM server for natural language data exploration.
-            \item Integrated a RAPIDS-accelerated record linkage workflow for entity resolution, utilising asynchronous execution and semantic embeddings to maximise candidate pair recall.
-            \item Developed custom CUDA-backed XGBoost and PyTorch model wrappers with automated hardware fallback (CUDA/MPS/CPU), optimising training throughput for large-scale datasets.
+            \item Engineered a \textbf{GPU-first AutoML pipeline} for heterogeneous tabular data — automated EDA, target-aware cleaning, and \textbf{Optuna}-powered hyperparameter optimisation.
+            \item Integrated a \textbf{RAPIDS}-accelerated record linkage workflow for entity resolution, using async execution and semantic embeddings to maximise candidate pair recall.
+            \item Developed custom CUDA-backed XGBoost and PyTorch wrappers with automated CUDA/MPS/CPU fallback, served via a \textbf{FastAPI + Docker + React/Vite} stack and an Ollama LLM for NL data exploration.
         \end{highlights}
     \end{onecolentry}
 
@@ -254,25 +252,9 @@
     \vspace{0.05 cm}
     \begin{onecolentry}
         \begin{highlights}
-            \item Architected a standalone control plane and real-time monitoring console for distributed ML training, with a self-contained backend, brand, and deployment surface.
+            \item Architected a standalone control plane and real-time monitoring console for distributed ML training, with its own backend, brand, and deployment surface.
             \item Built a \textbf{Firestore-backed} pod inventory and run-lifecycle model, surfacing NCCL liveness probes and per-rank telemetry rolled up live in a monochrome glass shell.
-            \item Designed a streaming event console for multi-rank orchestration, exposing per-step throughput, gradient norms, and rank-level failures without polling.
-            \item Shipped on \textbf{React + TypeScript + Firebase} with a Python ingestion service, separating the operator UI from the training cluster's runtime.
-        \end{highlights}
-    \end{onecolentry}
-
-    \begin{twocolentry}{
-        \href{https://github.com/razeenwasif/Council}{Github}
-    }
-        \textbf{Council: Multi-Model Coding Agent}
-    \end{twocolentry}
-
-    \vspace{0.05 cm}
-    \begin{onecolentry}
-        \begin{highlights}
-            \item Designed a seven-member AI council layered on a coding CLI — \textbf{Architect, Implementer, Skeptic, Critic, Tester, Security,} and \textbf{Performance} lenses propose in parallel before a synthesizer reduces to a single plan.
-            \item Implemented a single-executor diff pipeline so only one role writes code while the others vote \textbf{pass / nit / concern / block}, with a single revision pass triggered on three or more blocks.
-            \item Built the runtime in \textbf{TypeScript on Bun / Node.js} with a multi-model backend, fanning out role prompts in parallel and aggregating structured votes for gating.
+            \item Designed a streaming event console for multi-rank orchestration — per-step throughput, gradient norms, and rank-level failures without polling — on \textbf{React + TypeScript + Firebase} with a Python ingestion service.
         \end{highlights}
     \end{onecolentry}
 
@@ -300,43 +282,10 @@
     \vspace{0.05 cm}
     \begin{onecolentry}
         \begin{highlights}
-            \item Designed and simulated a fully functional \textbf{16-bit RISC processor} from basic logic gates, featuring a custom Instruction Set Architecture (ISA) with support for arithmetic, logic, and control-flow operations.
-            \item Engineered a \textbf{Multi-Stage Datapath} incorporating an Arithmetic Logic Unit (ALU), a Register File, and a microprogrammed \textbf{Control Unit} to handle complex instruction decoding and execution cycles.
-            \item Optimized memory management by implementing a 16-bit address bus with dedicated **Program Counter (PC)** and **Instruction Registers (IR)**, facilitating efficient fetch-decode-execute loops.
-            \item Validated hardware logic through rigorous unit testing of individual components (ALU, MUX, Decoders) and end-to-end simulation of assembly-level programs (e.g., Fibonacci, array traversal).
+            \item Designed and simulated a \textbf{16-bit RISC processor} from basic logic gates — custom ISA, multi-stage datapath (ALU, register file, microprogrammed control unit), and a 16-bit address bus with dedicated PC / IR.
+            \item Validated end-to-end through unit tests of individual components and full assembly-level programs (Fibonacci, array traversal).
         \end{highlights}
     \end{onecolentry}
-
-        % \begin{twocolentry}{
-        % \href{https://github.com/razeenwasif/Machine_Learning/tree/main/Stable-Diffusion}{github}   
-        % \textit{}}
-        %     \textbf{Stable Diffusion model}
-        %     \textit{}
-        % \end{twocolentry}
-        % \vspace{0.05 cm}
-        % \begin{onecolentry}
-        %     \begin{highlights}
-        %         \item This project is an implementation of the Stable Diffusion text-to-image model from scratch using PyTorch. The implementation focuses on building the core parts of the architecture, including VAE, U-Net, text encoder and noise scheduler.
-        %     \end{highlights}
-        % \end{onecolentry}
-
-        \begin{twocolentry}{
-        \href{https://github.com/razeenwasif/Software-Development/tree/main/social-media}{github}    
-        \textit{}}
-            \textbf{High-Performance Social Media Backend \& Mobile Application}
-            \textit{}
-        \end{twocolentry}
-        \vspace{0.05 cm}
-        \begin{onecolentry}
-            \begin{highlights}
-                \item Developed a scalable Java-based backend for an Android social media application, implementing complex features like real-time message reactions, search, and content moderation.
-                \item Engineered a custom \textbf{AVL Tree} data structure from scratch to ensure $O(\log n)$ performance for data retrieval, meeting strict latency requirements (1M operations/sec) for reaction processing.
-                \item Designed a robust \textbf{Censorship Facade} with \textbf{Leet Speak decoding} and pattern matching to identify and filter profanity through custom normalization algorithms.
-                \item Leveraged advanced \textbf{Design Patterns} including \textbf{DAO, Singleton, Factory, and Template} to build a modular, extensible, and SOLID-compliant architecture.
-                \item Optimized a \textbf{persistence layer} using JSON and binary formats, achieving high space efficiency ($<$40 bytes/record) and high-speed I/O (100k records/sec).
-                \item Refactored legacy codebases to eliminate code smells and improve maintainability, achieving high statement coverage through \textbf{JUnit parameterized and black-box testing}.
-            \end{highlights}
-        \end{onecolentry}
 
     \switchcolumn
 
@@ -372,8 +321,7 @@
         \vspace{0.05 cm}
         \begin{onecolentry}
             \begin{highlights}
-                \item Identified and resolved a critical \textbf{segmentation fault} within the \texttt{PixelArray} module, enhancing library stability.
-                \item Debugged memory management issues in the \textbf{C-based backend} of the library to prevent invalid memory access during array slicing operations.
+                \item Identified and resolved a \textbf{segmentation fault} in the \texttt{PixelArray} module — debugged memory management in the \textbf{C backend} to prevent invalid access during array slicing.
             \end{highlights}
         \end{onecolentry}
 
@@ -382,7 +330,24 @@
     % =========================================================
 
    \section{Research}
-        
+
+        \begin{twocolentry}{
+        \href{https://github.com/razeenwasif/Council}{Github}
+        }
+            \textbf{Quantized Domain-Specialist Verifiers for Multi-Agent LLM Scientific Reasoning}
+        \end{twocolentry}
+
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Investigating a hybrid architecture where frontier API models drive multi-agent debate (\textbf{Council} `/discover`) and locally-hosted, fine-tuned, aggressively-quantized open-weights models act as a \textbf{domain-specialist verification layer} for domain-specific claims.
+                \item Built a \textbf{single-GPU LoRA + DoRA + QLoRA pipeline} (Unsloth, NEFTune, sequence packing, 8-bit paged AdamW) on Mistral-7B-Instruct-v0.3 — producing physics / math / CS specialists trained partly on \textbf{Council-generated synthetic debate data}.
+                \item Designing a controlled ablation across six bit-depths (FP16 / Q8 / Q6 / Q4 / Q3 / Q2) comparing \textbf{PTQ vs.~QAT} in the specialist-as-verifier regime; target venue: NeurIPS ENLSP / ICLR ME-FoMo / ICML AI4Science 2026.
+            \end{highlights}
+        \end{onecolentry}
+
+    \vspace{0.1 cm}
+
         \begin{twocolentry}{
         \href{https://arm-wision.github.io/}{Project} / \href{https://www.kaggle.com/competitions/plantclef2026}{Kaggle}
         }
@@ -411,8 +376,7 @@
             \begin{highlights}
                 \item Investigated the impact of \textbf{INT8 quantization} on phase-coherence in Gravitational Wave (GW) signals for deployment on ultra-low-power \textbf{ARM Cortex-M} hardware.
                 \item Developed a "Signal-Preserving" framework using \textbf{Quantization-Aware Training (QAT)} and Hardware-Aware Distillation to minimize SNR loss in stochastic astrophysical data.
-                \item Engineered custom \textbf{C++ inference kernels} to bypass TensorFlow Lite Micro overhead, optimizing for high-frequency (4096 Hz) strain data within a \textbf{<128KB SRAM} budget.
-                \item Balanced sensitivity against False Alarm Rates to achieve over 99\% data compression on edge devices for autonomous astronomical sensors.
+                \item Engineered custom \textbf{C++ inference kernels} bypassing TensorFlow Lite Micro for 4096 Hz strain data within a \textbf{<128KB SRAM} budget, achieving over 99\% data compression at the target FAR.
             \end{highlights}
         \end{onecolentry}
         
@@ -461,23 +425,11 @@
             \begin{onecolentry}
                 \vspace{0.05 cm}
                 \begin{itemize}
-                    \item Completed a job simulation involving data analysis for Deloitte's Technology team. Created a data dashboard using Tableau. Wrote a proposal for a client project to create a functioning dashboard. Used Excel to classify data and draw business conclusions
+                    \item Data analysis for Deloitte's Technology team — Tableau dashboard, client proposal, Excel-based classification and business conclusions.
                 \end{itemize}
             \vspace{0.05 cm}
             \end{onecolentry}
 
-             \begin{onecolentry}
-                \textbf{Study Australia Industry Experience Program}\newline
-                \textit{Practera} \hfill \textit{July 2025}
-            \end{onecolentry}
-            \begin{onecolentry}
-                \vspace{0.05 cm}
-                \begin{itemize}
-                    \item Applied digital marketing and SEO best practices to develop a comprehensive strategy for a real estate startup, including competitor analysis and video automation recommendations.
-                \end{itemize}
-            \vspace{0.05 cm}
-            \end{onecolentry}
-            
     % =========================================================
     % =========================================================
     % =========================================================
