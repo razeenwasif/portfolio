@@ -52,19 +52,41 @@
     color: #f5f5f7;
   }
 
-  /* Subtle film grain via radial noise */
+  /* Film grain — SVG fractal noise as a tiled background, soft-light
+     blended into the page. Visible texture, not the invisible dot
+     pattern it replaced. */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 1;
-    background-image: radial-gradient(
-        rgba(255, 255, 255, 0.018) 1px,
-        transparent 1px
-      );
-    background-size: 3px 3px;
-    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='5'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 240px 240px;
+    opacity: 0.085;
+    mix-blend-mode: soft-light;
+    animation: grain-shimmer 3.2s steps(6, end) infinite;
+  }
+
+  @keyframes grain-shimmer {
+    0% {
+      background-position: 0% 0%;
+    }
+    20% {
+      background-position: -23% 11%;
+    }
+    40% {
+      background-position: 19% -7%;
+    }
+    60% {
+      background-position: -8% 19%;
+    }
+    80% {
+      background-position: 14% -13%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
   }
 }
 

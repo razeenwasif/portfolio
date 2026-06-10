@@ -105,15 +105,49 @@ export function Hero() {
         }}
       />
 
+      {/* Editorial vertical rail — PORTFOLIO · 2026 · RAZEEN WASIF rotated
+          down the right edge of the hero */}
+      <div
+        aria-hidden
+        className="hidden lg:block absolute right-6 top-32 bottom-32 pointer-events-none"
+      >
+        <p
+          className="text-[10px] font-mono uppercase tracking-[0.35em] text-chalk-500 whitespace-nowrap"
+          style={{ writingMode: "vertical-rl" }}
+        >
+          Portfolio · 2026 · Razeen Wasif
+        </p>
+      </div>
+
       <div className="relative mx-auto max-w-page px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-end">
-          <div ref={r1} className="reveal lg:col-span-8">
-            <p className="eyebrow mb-7">
+          <div ref={r1} className="reveal lg:col-span-11">
+            <p className="eyebrow mb-5">
               <span className="inline-block h-1 w-1 rounded-full bg-accent align-middle mr-2" />
               {site.location} ·{" "}
               <RotatingWord
                 words={["Building", "Shipping", "Researching"]}
               />
+            </p>
+
+            {/* Currently line — moved up above the name as an editorial caption */}
+            <p
+              ref={r2}
+              className="reveal max-w-prose2 mb-7 text-[15px] md:text-[17px] leading-relaxed text-chalk-300 italic font-display"
+              style={{ transitionDelay: "100ms" }}
+            >
+              <span className="not-italic font-sans inline-flex items-center gap-1.5 mr-2 text-amber-soft">
+                <span className="relative inline-flex h-1.5 w-1.5">
+                  <span className="absolute inset-0 rounded-full bg-amber opacity-60 animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber" />
+                </span>
+                <span className="eyebrow !text-amber-soft">Currently</span>
+              </span>
+              Shipping an{" "}
+              <span className="not-italic text-accent-soft">
+                identification
+              </span>{" "}
+              platform and a feedback dashboard with ANU.
             </p>
 
             <h1
@@ -159,44 +193,23 @@ export function Hero() {
                 Contact
               </a>
             </div>
+
+            {/* Mono signature one-liner below CTAs — replaces the right-side panel */}
+            <p className="mt-10 text-[11px] font-mono uppercase tracking-[0.22em] text-chalk-400 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+              <span>ML · Full-stack</span>
+              <span className="text-chalk-500">·</span>
+              <span>PyTorch · React</span>
+              <span className="text-chalk-500">·</span>
+              <span>Canberra</span>
+              <span className="text-chalk-500">·</span>
+              <span className="text-amber-soft">Open to grad roles</span>
+            </p>
           </div>
 
-          {/* Floating glass info panel — offset, asymmetric */}
-          <div
-            ref={r2}
-            className="reveal lg:col-span-4 lg:translate-y-2"
-            style={{ transitionDelay: "120ms" }}
-          >
-            <GlassTile>
-              <div
-                aria-hidden
-                className="absolute -top-px left-6 right-6 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
-              />
-
-              <div className="flex items-center justify-between">
-                <p className="eyebrow">Currently</p>
-                <span className="inline-flex items-center gap-1.5 text-[11px] text-amber-soft">
-                  <span className="relative inline-flex h-1.5 w-1.5">
-                    <span className="absolute inset-0 rounded-full bg-amber opacity-60 animate-ping" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber" />
-                  </span>
-                  Online
-                </span>
-              </div>
-
-              <p className="mt-4 text-[15px] text-chalk-100 leading-snug text-balance">
-                Shipping an <span className="text-accent-soft">identification</span>{" "}
-                platform and a feedback dashboard with ANU.
-              </p>
-
-              <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 text-[12px]">
-                <Stat k="Focus" v="ML · Full-stack" />
-                <Stat k="Stack" v="PyTorch · React" />
-                <Stat k="Based" v="Canberra" />
-                <Stat k="Open to" v="Grad roles" />
-              </div>
-            </GlassTile>
-          </div>
+          {/* Right column intentionally empty — typography carries the
+              weight. The vertical PORTFOLIO rail is absolutely positioned
+              above outside this grid. */}
+          <div className="hidden lg:block lg:col-span-1" aria-hidden />
         </div>
 
         {/* Hairline marquee under hero */}
@@ -207,37 +220,6 @@ export function Hero() {
         </div>
       </div>
     </section>
-  );
-}
-
-function GlassTile({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const node = ref.current;
-    if (!node) return;
-    const rect = node.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    node.style.setProperty("--sheen-x", `${x.toFixed(1)}%`);
-    node.style.setProperty("--sheen-y", `${y.toFixed(1)}%`);
-  };
-  return (
-    <div
-      ref={ref}
-      onMouseMove={handleMove}
-      className="glass glass-sheen p-6 md:p-7 relative"
-    >
-      {children}
-    </div>
-  );
-}
-
-function Stat({ k, v }: { k: string; v: string }) {
-  return (
-    <div className="flex items-baseline justify-between border-b border-white/[0.05] pb-2 last:border-0">
-      <span className="text-chalk-400">{k}</span>
-      <span className="font-mono text-chalk-100">{v}</span>
-    </div>
   );
 }
 
