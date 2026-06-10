@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import type { ProjectDetail, ProjectSection } from "../data/site";
+import type { ProjectDetail, ProjectImage, ProjectSection } from "../data/site";
 import { useReveal } from "../hooks/useReveal";
 
 type DetailProps = {
@@ -202,22 +202,7 @@ function DetailLayout(props: DetailProps & { detail: ProjectDetail }) {
               </div>
               <div className="lg:col-span-9 grid grid-cols-1 gap-6">
                 {detail.gallery.map((img) => (
-                  <figure
-                    key={img.src}
-                    className="rounded-tokenLg overflow-hidden border border-white/[0.06] bg-white/[0.02]"
-                  >
-                    <img
-                      src={img.src}
-                      alt={img.alt}
-                      loading="lazy"
-                      className="block w-full h-auto"
-                    />
-                    {img.caption && (
-                      <figcaption className="px-5 md:px-6 py-4 text-[13px] text-chalk-300 leading-relaxed border-t border-white/[0.06]">
-                        {img.caption}
-                      </figcaption>
-                    )}
-                  </figure>
+                  <GalleryFigure key={img.src} img={img} />
                 ))}
               </div>
             </div>
@@ -284,6 +269,93 @@ function SectionBlock({ section }: { section: ProjectSection }) {
         </div>
       </div>
     </section>
+  );
+}
+
+function GalleryFigure({ img }: { img: ProjectImage }) {
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const figRef = useRef<HTMLElement | null>(null);
+  const rectRef = useRef<DOMRect | null>(null);
+  const frameRef = useRef<number | null>(null);
+
+  const handleEnter = (e: React.MouseEvent<HTMLElement>) => {
+    rectRef.current = e.currentTarget.getBoundingClientRect();
+    const fig = figRef.current;
+    const node = imgRef.current;
+    if (fig) fig.style.transition = "transform 350ms cubic-bezier(0.22, 1, 0.36, 1)";
+    if (node) node.style.transition = "transform 400ms cubic-bezier(0.22, 1, 0.36, 1)";
+  };
+
+  const handleMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = rectRef.current ?? e.currentTarget.getBoundingClientRect();
+    rectRef.current = rect;
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    const x = (px - 0.5) * 2;   // −1 → 1
+    const y = (py - 0.5) * 2;
+    const TILT = 6;             // max degrees of 3D rotation
+    const PAN = 6;              // % of image to pan
+    const SCALE = 1.06;
+
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+    frameRef.current = requestAnimationFrame(() => {
+      const fig = figRef.current;
+      const node = imgRef.current;
+      if (fig) {
+        // rotateX negative on top of card so bottom pops out; rotateY negative on left so right pops out
+        fig.style.transform = `rotateX(${(-y * TILT).toFixed(2)}deg) rotateY(${(x * TILT).toFixed(2)}deg)`;
+        fig.style.transition = "transform 160ms cubic-bezier(0.22, 1, 0.36, 1)";
+      }
+      if (node) {
+        node.style.transform = `scale(${SCALE}) translate3d(${(-x * PAN).toFixed(2)}%, ${(-y * PAN).toFixed(2)}%, 0)`;
+        node.style.transition = "transform 160ms cubic-bezier(0.22, 1, 0.36, 1)";
+      }
+    });
+  };
+
+  const handleLeave = () => {
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+    rectRef.current = null;
+    const fig = figRef.current;
+    const node = imgRef.current;
+    if (fig) {
+      fig.style.transition = "transform 500ms cubic-bezier(0.22, 1, 0.36, 1)";
+      fig.style.transform = "";
+    }
+    if (node) {
+      node.style.transition = "transform 500ms cubic-bezier(0.22, 1, 0.36, 1)";
+      node.style.transform = "";
+    }
+  };
+
+  return (
+    <div style={{ perspective: "1200px" }}>
+      <figure
+        ref={figRef}
+        onMouseEnter={handleEnter}
+        onMouseMove={handleMove}
+        onMouseLeave={handleLeave}
+        className="rounded-tokenLg overflow-hidden border border-white/[0.06] bg-white/[0.02] will-change-transform"
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        <div className="relative overflow-hidden cursor-zoom-in">
+          <img
+            ref={imgRef}
+            src={img.src}
+            alt={img.alt}
+            loading="lazy"
+            className="block w-full h-auto will-change-transform"
+            style={{ transformOrigin: "center center" }}
+            draggable={false}
+          />
+        </div>
+        {img.caption && (
+          <figcaption className="px-5 md:px-6 py-4 text-[13px] text-chalk-300 leading-relaxed border-t border-white/[0.06]">
+            {img.caption}
+          </figcaption>
+        )}
+      </figure>
+    </div>
   );
 }
 
