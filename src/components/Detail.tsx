@@ -166,10 +166,13 @@ function DetailLayout(props: DetailProps & { detail: ProjectDetail }) {
           <div className="mx-auto max-w-page px-6">
             <div
               ref={statsRef}
-              className="reveal grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.05] border border-white/[0.05] rounded-tokenLg overflow-hidden"
+              className="reveal grid grid-cols-2 md:grid-cols-4 gap-3"
             >
               {detail.stats.map((s) => (
-                <div key={s.label} className="bg-ink-900 p-6 md:p-7">
+                <div
+                  key={s.label}
+                  className="glass p-6 md:p-7"
+                >
                   <p className="eyebrow">{s.label}</p>
                   <p className="mt-3 font-display font-light text-chalk-50 text-[28px] md:text-[34px] leading-none tracking-tightish tabular-nums">
                     {s.value}

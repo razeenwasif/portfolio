@@ -167,7 +167,7 @@ export function Hero() {
             className="reveal lg:col-span-4 lg:translate-y-2"
             style={{ transitionDelay: "120ms" }}
           >
-            <div className="glass p-6 md:p-7 relative">
+            <GlassTile>
               <div
                 aria-hidden
                 className="absolute -top-px left-6 right-6 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
@@ -195,7 +195,7 @@ export function Hero() {
                 <Stat k="Based" v="Canberra" />
                 <Stat k="Open to" v="Grad roles" />
               </div>
-            </div>
+            </GlassTile>
           </div>
         </div>
 
@@ -207,6 +207,28 @@ export function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+function GlassTile({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const node = ref.current;
+    if (!node) return;
+    const rect = node.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    node.style.setProperty("--sheen-x", `${x.toFixed(1)}%`);
+    node.style.setProperty("--sheen-y", `${y.toFixed(1)}%`);
+  };
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMove}
+      className="glass glass-sheen p-6 md:p-7 relative"
+    >
+      {children}
+    </div>
   );
 }
 
