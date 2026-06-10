@@ -11,7 +11,19 @@ export function Research() {
   const r = useReveal<HTMLDivElement>();
 
   return (
-    <section id="research" className="relative py-28 md:py-40">
+    <section
+      id="research"
+      className="relative isolate overflow-hidden py-28 md:py-40"
+    >
+      {/* Ambient indigo swatch — cooler hue marks the academic/research chapter */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-32 -right-32 h-[520px] w-[520px] rounded-full opacity-30 blur-3xl -z-10"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(104,119,245,0.45), rgba(104,119,245,0) 60%)",
+        }}
+      />
       <div className="mx-auto max-w-page px-6">
         <div ref={r} className="reveal mb-14 md:mb-20 flex items-end justify-between gap-8">
           <div>

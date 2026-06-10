@@ -12,7 +12,19 @@ export function Stack() {
   const groups = Object.entries(stack);
 
   return (
-    <section id="stack" className="relative py-28 md:py-40">
+    <section
+      id="stack"
+      className="relative isolate overflow-hidden py-28 md:py-40"
+    >
+      {/* Ambient cyan-teal swatch — coolest hue marks the tooling chapter */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-32 -left-32 h-[460px] w-[460px] rounded-full opacity-25 blur-3xl -z-10"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(94,234,212,0.4), rgba(94,234,212,0) 60%)",
+        }}
+      />
       <div className="mx-auto max-w-page px-6">
         <div ref={r} className="reveal mb-12 md:mb-16">
           <p className="eyebrow">Stack</p>
