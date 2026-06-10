@@ -55,7 +55,30 @@ export function ResumeModalProvider({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * Inline PDF preview only works where the browser has a built-in viewer —
+ * desktop Chrome/Firefox/Safari/Edge do, iOS Safari and most Android browsers
+ * don't (they show a blank iframe). Use the modern API when available and
+ * fall back to a UA + width sniff.
+ */
+function canPreviewPdf(): boolean {
+  if (typeof navigator === "undefined" || typeof window === "undefined") {
+    return false;
+  }
+  if ("pdfViewerEnabled" in navigator) {
+    return Boolean(
+      (navigator as Navigator & { pdfViewerEnabled?: boolean })
+        .pdfViewerEnabled,
+    );
+  }
+  const ua = (navigator as Navigator).userAgent ?? "";
+  const isMobileUA = /iPhone|iPad|iPod|Android|Mobile/i.test(ua);
+  const wide = window.matchMedia("(min-width: 768px)").matches;
+  return wide && !isMobileUA;
+}
+
 function ResumeModal({ onClose }: { onClose: () => void }) {
+  const canPreview = canPreviewPdf();
   return (
     <div
       role="dialog"
@@ -135,12 +158,64 @@ function ResumeModal({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        {/* PDF viewer */}
-        <iframe
-          src="/main.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
-          title="Razeen Wasif resume"
-          className="w-full flex-1 bg-white"
-        />
+        {/* PDF viewer (where the browser supports inline rendering) or a
+            styled fallback panel on iOS / Android / older browsers. */}
+        {canPreview ? (
+          <iframe
+            src="/main.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+            title="Razeen Wasif resume"
+            className="w-full flex-1 bg-white"
+          />
+        ) : (
+          <div className="flex-1 flex items-center justify-center p-6 md:p-10">
+            <div className="max-w-md text-center">
+              <p className="eyebrow text-chalk-300">Preview unavailable</p>
+              <h2 className="mt-4 font-display font-light text-chalk-50 text-[24px] md:text-[30px] leading-tight tracking-tightish">
+                Your browser doesn't preview PDFs inline.
+              </h2>
+              <p className="mt-4 text-[14px] text-chalk-300 leading-relaxed">
+                Tap below to download the file, or open it in a new tab — most
+                mobile browsers will render it in their full-screen viewer
+                there.
+              </p>
+              <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                <a
+                  href="/main.pdf"
+                  download
+                  className="inline-flex h-11 items-center gap-2 px-5 rounded-full bg-chalk-50 text-ink-900 text-[13px] font-medium transition-all duration-300 hover:bg-white justify-center"
+                >
+                  Download PDF
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 4v12m0 0 4-4m-4 4-4-4M4 20h16"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </a>
+                <a
+                  href="/main.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 items-center gap-2 px-5 rounded-full border border-white/15 text-[13px] font-medium text-chalk-100 transition-all duration-300 hover:bg-white/10 hover:border-accent-soft hover:text-accent-soft justify-center"
+                >
+                  Open in new tab
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M7 17 17 7m0 0H8m9 0v9"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
