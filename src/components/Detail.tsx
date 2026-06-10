@@ -130,7 +130,7 @@ function DetailLayout(props: DetailProps & { detail: ProjectDetail }) {
       <section className="py-16 md:py-24 border-t border-white/[0.06]">
         <div className="mx-auto max-w-page px-6">
           <div ref={overviewRef} className="reveal grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 lg:sticky lg:top-24 lg:self-start">
               <p className="eyebrow">Overview</p>
             </div>
             <div className="lg:col-span-9 space-y-5 max-w-prose2">
@@ -194,7 +194,7 @@ function DetailLayout(props: DetailProps & { detail: ProjectDetail }) {
         <section className="py-16 md:py-24 border-t border-white/[0.06]">
           <div className="mx-auto max-w-page px-6">
             <div ref={galleryRef} className="reveal grid grid-cols-1 lg:grid-cols-12 gap-10">
-              <div className="lg:col-span-3">
+              <div className="lg:col-span-3 lg:sticky lg:top-24 lg:self-start">
                 <p className="eyebrow">Gallery</p>
                 <h2 className="mt-4 font-display font-light text-chalk-50 text-[28px] md:text-[36px] leading-[1.05] tracking-tightish">
                   Selected images.
@@ -237,7 +237,7 @@ function SectionBlock({ section }: { section: ProjectSection }) {
     <section className="py-16 md:py-24 border-t border-white/[0.06]">
       <div className="mx-auto max-w-page px-6">
         <div ref={r} className="reveal grid grid-cols-1 lg:grid-cols-12 gap-10">
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 lg:sticky lg:top-24 lg:self-start">
             <p className="eyebrow">{section.eyebrow}</p>
             <h2 className="mt-4 font-display font-light text-chalk-50 text-[28px] md:text-[36px] leading-[1.05] tracking-tightish">
               {section.title}

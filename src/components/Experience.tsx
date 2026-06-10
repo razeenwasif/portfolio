@@ -17,7 +17,7 @@ export function Experience() {
     <section id="experience" className="relative py-28 md:py-40">
       <div className="mx-auto max-w-page px-6">
         <div ref={r} className="reveal grid grid-cols-1 lg:grid-cols-12 gap-10">
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 lg:sticky lg:top-24 lg:self-start">
             <p className="eyebrow">Experience</p>
             <h2 className="mt-4 font-display font-light text-chalk-50 text-[28px] md:text-[36px] leading-[1.05] tracking-tightish">
               A short rail.
