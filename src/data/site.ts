@@ -843,6 +843,34 @@ export type TimelineEntry = {
 
 export const timeline: TimelineEntry[] = [
   {
+    year: "Jun 2026 — Now",
+    role: "Council Specialists fine-tuning pipeline",
+    org: "Honours-track research",
+    detail:
+      "Single-GPU LoRA + DoRA + QLoRA pipeline on Mistral-7B-Instruct-v0.3 producing physics, math, and CS domain-specialist verifiers for the Council multi-agent system. PTQ vs QAT quantization curve as the headline ablation.",
+  },
+  {
+    year: "Jun 2026",
+    role: "Onyx · AudioPulse · BoxTube",
+    org: "Three terminal apps",
+    detail:
+      "Three TUIs in a four-day sprint — an Obsidian-style markdown vault (Rust / Ratatui), a Spotify-style music player with librespot playback (Go / Bubble Tea), and a YouTube client with in-terminal video via mpv + kitty graphics (Python / Textual).",
+  },
+  {
+    year: "May 2026 — Now",
+    role: "Council",
+    org: "Multi-model coding agent",
+    detail:
+      "Seven-role AI council layered on a coding CLI — Architect, Implementer, Skeptic, Critic, Tester, Security, Performance — with a single-executor diff pipeline and vote-gated revision. Substrate for the specialist-verifier research above.",
+  },
+  {
+    year: "Apr 2026 — Now",
+    role: "TinyML for Gravitational-Wave Triggers",
+    org: "Honours thesis",
+    detail:
+      "Quantifying how INT8 quantization disturbs phase coherence in LIGO chirp signals, with a signal-fidelity-first optimization framework (QAT + custom C++ kernels) for ARM Cortex-M deployment under a <128 KB SRAM budget.",
+  },
+  {
     year: "Feb 2026 — Now",
     role: "Full-Stack Developer & UX Lead",
     org: "ANU Virtuous Loop",
@@ -850,11 +878,32 @@ export const timeline: TimelineEntry[] = [
       "Architecting a scalable feedback dashboard on Microsoft Power Platform with automated Power Automate pipelines, RLS-secured data, and a UX overhaul that lifted navigation efficiency 40%.",
   },
   {
-    year: "2023 — Now",
-    role: "Bachelor of Advanced Computing (Honours)",
-    org: "Australian National University",
+    year: "Mar 2026 — May 2026",
+    role: "Oracle & PlantCLEF 2026 submission",
+    org: "ANU @ PlantCLEF",
     detail:
-      "Coursework in Machine Learning, AI, Computer Vision, Computer Architecture, Algorithms, and Data Analysis. Background in physics underpins a quantitative approach.",
+      "BioCLIP 2.5 ViT-H/14 partial fine-tune with taxonomy heads + 4×4 tile inference ensembled across 224 / 336 px. 0.418 Macro F1 on the 7,806-class long-tail benchmark. Paper submitted to LifeCLEF / CLEF 2026; productized as the Oracle live engine.",
+  },
+  {
+    year: "May 2026",
+    role: "Nexus",
+    org: "Distributed training console",
+    detail:
+      "Standalone control plane for distributed ML training — Firestore-backed pod inventory, NCCL liveness probes, per-rank telemetry rolled up live in a monochrome glass shell.",
+  },
+  {
+    year: "Oct 2025 — May 2026",
+    role: "Prism",
+    org: "AutoML workbench",
+    detail:
+      "GPU-first AutoML pipeline for tabular data — automated EDA, Optuna hyperparameter search, RAPIDS-accelerated entity resolution, and an Ollama-hosted LLM for natural-language data exploration. React + FastAPI + Docker Compose stack.",
+  },
+  {
+    year: "2025",
+    role: "GPU-Accelerated Kernel Subsystem",
+    org: "Coursework",
+    detail:
+      "Linux kernel character device offloading AES-256 and regex matching to CUDA — pinned memory, unified memory, work-stealing scheduler. 15× throughput over the CPU baseline on the benchmark.",
   },
   {
     year: "2024 — 2025",
@@ -862,5 +911,19 @@ export const timeline: TimelineEntry[] = [
     org: "Pygame",
     detail:
       "Identified and resolved a segmentation fault in the PixelArray module — debugged memory management in the C-based backend to prevent invalid access during slicing.",
+  },
+  {
+    year: "2024",
+    role: "16-Bit RISC CPU",
+    org: "Coursework",
+    detail:
+      "Designed and simulated a 16-bit RISC processor from basic logic gates — custom ISA, multi-stage datapath, microprogrammed control unit. Validated end-to-end on assembly programs.",
+  },
+  {
+    year: "2023 — Now",
+    role: "Bachelor of Advanced Computing (Honours)",
+    org: "Australian National University",
+    detail:
+      "Coursework in Machine Learning, AI, Computer Vision, Computer Architecture, Algorithms, and Data Analysis. Background in physics underpins a quantitative approach.",
   },
 ];
