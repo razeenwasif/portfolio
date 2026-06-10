@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const links = [
-  { href: "#work", label: "Work" },
-  { href: "#research", label: "Research" },
-  { href: "#about", label: "About" },
-  { href: "#stack", label: "Stack" },
-  { href: "#contact", label: "Contact" },
+  { to: "/#work", label: "Work" },
+  { to: "/#research", label: "Research" },
+  { to: "/#about", label: "About" },
+  { to: "/#stack", label: "Stack" },
+  { to: "/#contact", label: "Contact" },
 ];
 
 export function Nav() {
@@ -35,22 +36,22 @@ export function Nav() {
           ].join(" ")}
           aria-label="Primary"
         >
-          <a
-            href="#top"
+          <Link
+            to="/"
             className="font-display text-[15px] font-medium tracking-tightish text-chalk-50"
           >
             <span className="text-accent">·</span> R.W.
-          </a>
+          </Link>
 
           <ul className="hidden md:flex items-center gap-8 text-[13px] text-chalk-300">
             {links.map((l) => (
-              <li key={l.href}>
-                <a
-                  href={l.href}
+              <li key={l.to}>
+                <Link
+                  to={l.to}
                   className="transition-colors duration-300 ease-soft hover:text-chalk-50"
                 >
                   {l.label}
-                </a>
+                </Link>
               </li>
             ))}
             <li>
@@ -66,12 +67,12 @@ export function Nav() {
             </li>
           </ul>
 
-          <a
-            href="#contact"
+          <Link
+            to="/#contact"
             className="text-[13px] text-chalk-100 hairline border rounded-token px-3.5 py-1.5 transition-all duration-300 ease-soft hover:border-white/20 hover:bg-white/[0.03]"
           >
             Get in touch
-          </a>
+          </Link>
         </nav>
       </div>
     </header>

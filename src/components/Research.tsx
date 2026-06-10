@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { research, type Research as ResearchItem } from "../data/site";
 import { useReveal } from "../hooks/useReveal";
 
@@ -19,7 +20,7 @@ export function Research() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/[0.05] border border-white/[0.05] rounded-tokenLg overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {research.map((item, i) => (
             <ResearchCard key={item.index} item={item} delay={i * 80} />
           ))}
@@ -31,12 +32,9 @@ export function Research() {
 
 function ResearchCard({ item, delay }: { item: ResearchItem; delay: number }) {
   const r = useReveal<HTMLDivElement>();
-  return (
-    <div
-      ref={r}
-      className="reveal group relative bg-ink-900 p-7 md:p-9 transition-colors duration-500 ease-soft hover:bg-ink-800"
-      style={{ transitionDelay: `${delay}ms` }}
-    >
+
+  const inner = (
+    <div className="p-7 md:p-9">
       <div className="flex items-center justify-between gap-4">
         <span className="font-mono text-[12px] text-chalk-500 group-hover:text-accent-soft transition-colors duration-500 ease-soft">
           {item.index}
@@ -46,7 +44,7 @@ function ResearchCard({ item, delay }: { item: ResearchItem; delay: number }) {
         </span>
       </div>
 
-      <h3 className="mt-5 font-display font-light text-chalk-50 text-[22px] md:text-[28px] leading-tight tracking-tightish transition-transform duration-500 ease-soft group-hover:-translate-y-0.5">
+      <h3 className="mt-5 font-display font-light text-chalk-50 text-[22px] md:text-[28px] leading-tight tracking-tightish transition-transform duration-500 ease-soft group-hover:-translate-y-0.5 group-hover:text-accent-soft">
         {item.title}
       </h3>
 
@@ -59,7 +57,7 @@ function ResearchCard({ item, delay }: { item: ResearchItem; delay: number }) {
       </p>
 
       {item.contribution && (
-        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 border-l border-white/10 pl-5">
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 border-l border-white/10 pl-5 group-hover:border-accent/40 transition-colors duration-500 ease-soft">
           {item.contribution.map((c) => (
             <div key={c} className="flex items-center gap-2">
               <span className="h-1 w-1 rounded-full bg-accent/60" />
@@ -78,6 +76,7 @@ function ResearchCard({ item, delay }: { item: ResearchItem; delay: number }) {
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             className="inline-flex h-9 items-center gap-2 px-4 rounded-full border border-white/10 text-[11px] font-mono text-chalk-200 transition-all duration-300 hover:bg-white/10 hover:border-accent-soft hover:text-accent-soft whitespace-nowrap"
           >
             {link.label}
@@ -93,6 +92,34 @@ function ResearchCard({ item, delay }: { item: ResearchItem; delay: number }) {
           </a>
         ))}
       </div>
+    </div>
+  );
+
+  const panelClasses = [
+    "block group relative rounded-tokenLg border border-white/[0.06] bg-white/[0.015]",
+    "transition-all duration-500 ease-soft",
+    item.slug
+      ? "cursor-pointer hover:bg-white/[0.035] hover:border-accent/35 hover:shadow-[0_0_0_1px_rgba(139,124,246,0.18),0_18px_60px_-22px_rgba(139,124,246,0.45)]"
+      : "",
+  ].join(" ");
+
+  return (
+    <div
+      ref={r}
+      className="reveal"
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {item.slug ? (
+        <Link
+          to={`/research/${item.slug}`}
+          className={panelClasses}
+          aria-label={`Open details for ${item.title}`}
+        >
+          {inner}
+        </Link>
+      ) : (
+        <div className={panelClasses}>{inner}</div>
+      )}
     </div>
   );
 }
