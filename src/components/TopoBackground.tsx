@@ -373,8 +373,10 @@ export function TopoBackground() {
           ))}
         </g>
 
-        {/* Scattered technical fragments — static, do not cycle */}
+        {/* Scattered technical fragments — static, do not cycle. Hidden on
+            narrow viewports where xMidYMid slice crops them off-screen. */}
         <g
+          className="topo-meta"
           fill="rgb(154,154,166)"
           fillOpacity="0.18"
           style={{
@@ -390,8 +392,8 @@ export function TopoBackground() {
           ))}
         </g>
 
-        {/* Corner registration marks */}
-        <g fill="rgb(154,154,166)" fillOpacity="0.22">
+        {/* Corner registration marks — same crop concern as the fragments */}
+        <g className="topo-meta" fill="rgb(154,154,166)" fillOpacity="0.22">
           {CORNERS.map((c, i) => (
             <text
               key={i}

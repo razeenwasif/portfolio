@@ -191,27 +191,29 @@ export function Hero() {
               platform and a feedback dashboard with ANU.
             </p>
 
-            {/* Mono signature one-liner — physics / maths fingerprint, each
-                technical term preceded by a canonical glyph in a dimmer
-                colour so the symbols read as quiet annotation. */}
-            <p className="mt-10 text-[11px] font-mono uppercase tracking-[0.22em] text-chalk-400 flex flex-wrap items-center gap-x-3 gap-y-1.5">
-              <span>
-                <span className="text-chalk-500 mr-1.5">ℏ</span>Physics
+            {/* Mono signature one-liner — physics / maths fingerprint. Each
+                term + trailing separator is bound in a whitespace-nowrap
+                unit so a · never dangles at a line break on narrow widths. */}
+            <p className="mt-10 text-[11px] font-mono uppercase tracking-[0.22em] text-chalk-400 leading-relaxed">
+              <span className="whitespace-nowrap">
+                <span className="text-chalk-500">ℏ</span> Physics{" "}
+                <span className="text-chalk-500">·</span>
+              </span>{" "}
+              <span className="whitespace-nowrap">
+                <span className="text-chalk-500">H</span> Information theory{" "}
+                <span className="text-chalk-500">·</span>
+              </span>{" "}
+              <span className="whitespace-nowrap">
+                <span className="text-chalk-500">Δ</span> Quantization{" "}
+                <span className="text-chalk-500">·</span>
+              </span>{" "}
+              <span className="whitespace-nowrap">
+                <span className="text-chalk-500">∇</span> Optimization{" "}
+                <span className="text-chalk-500">·</span>
+              </span>{" "}
+              <span className="whitespace-nowrap text-amber-soft">
+                Open to grad roles
               </span>
-              <span className="text-chalk-500">·</span>
-              <span>
-                <span className="text-chalk-500 mr-1.5">H</span>Information theory
-              </span>
-              <span className="text-chalk-500">·</span>
-              <span>
-                <span className="text-chalk-500 mr-1.5">Δ</span>Quantization
-              </span>
-              <span className="text-chalk-500">·</span>
-              <span>
-                <span className="text-chalk-500 mr-1.5">∇</span>Optimization
-              </span>
-              <span className="text-chalk-500">·</span>
-              <span className="text-amber-soft">Open to grad roles</span>
             </p>
           </div>
 

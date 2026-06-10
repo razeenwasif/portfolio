@@ -264,6 +264,15 @@
     animation: topo-march-dot 5s linear infinite;
   }
 
+  /* Topo fragments + corner marks live at the viewBox edges; on portrait
+     viewports preserveAspectRatio="xMidYMid slice" crops them out. Hide
+     them on narrow screens so the leftover text isn't cut off mid-glyph. */
+  @media (max-width: 768px) {
+    .topo-meta {
+      display: none;
+    }
+  }
+
   .marquee-mask {
     -webkit-mask-image: linear-gradient(
       to right,
