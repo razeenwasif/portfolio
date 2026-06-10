@@ -569,17 +569,53 @@ export const projects: Project[] = [
   },
 ];
 
-export const stack = {
-  Languages: ["Python", "C++", "CUDA", "Java", "TypeScript", "ARM ASM", "SQL"],
-  "ML / AI": ["PyTorch", "TensorFlow", "Optuna", "RAPIDS", "BioCLIP", "DINOv3"],
-  Systems: ["Linux Kernel", "TensorRT", "NVIDIA DALI", "FastAPI", "Docker"],
-  Platforms: [
+export const stack: Record<string, string[]> = {
+  Languages: [
+    "Python",
+    "C++",
+    "CUDA",
+    "Rust",
+    "Go",
+    "TypeScript",
+    "Java",
+    "R",
+    "Dart",
+    "ARM ASM",
+    "SQL",
+  ],
+  "ML / AI": [
+    "PyTorch",
+    "TensorFlow",
+    "Optuna",
+    "RAPIDS",
+    "BioCLIP",
+    "DINOv3",
+    "Unsloth",
+    "LoRA / DoRA",
+  ],
+  Systems: [
+    "Linux Kernel",
+    "TensorRT",
+    "NVIDIA DALI",
+    "FastAPI",
+    "Docker",
+    "Firestore",
+    "Bun",
+    "Node.js",
+  ],
+  "Platforms / Frameworks": [
+    "React",
+    "Vite",
+    "Flutter",
+    "Tailwind",
+    "Bubble Tea",
+    "Ratatui",
+    "Textual",
     "Power Platform",
     "Power BI",
     "Dataverse",
     "Firebase",
     "Figma",
-    "React",
   ],
 };
 
