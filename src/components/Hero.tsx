@@ -4,7 +4,6 @@ import { useReveal } from "../hooks/useReveal";
 
 export function Hero() {
   const r1 = useReveal<HTMLDivElement>();
-  const r2 = useReveal<HTMLDivElement>();
   const orbARef = useRef<HTMLDivElement | null>(null);
   const orbBRef = useRef<HTMLDivElement | null>(null);
   const [scrambleRev, setScrambleRev] = useState(0);
@@ -130,26 +129,6 @@ export function Hero() {
               />
             </p>
 
-            {/* Currently line — moved up above the name as an editorial caption */}
-            <p
-              ref={r2}
-              className="reveal max-w-prose2 mb-7 text-[15px] md:text-[17px] leading-relaxed text-chalk-300 italic font-display"
-              style={{ transitionDelay: "100ms" }}
-            >
-              <span className="not-italic font-sans inline-flex items-center gap-1.5 mr-2 text-amber-soft">
-                <span className="relative inline-flex h-1.5 w-1.5">
-                  <span className="absolute inset-0 rounded-full bg-amber opacity-60 animate-ping" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber" />
-                </span>
-                <span className="eyebrow !text-amber-soft">Currently</span>
-              </span>
-              Shipping an{" "}
-              <span className="not-italic text-accent-soft">
-                identification
-              </span>{" "}
-              platform and a feedback dashboard with ANU.
-            </p>
-
             <h1
               onMouseEnter={handleNameHover}
               className="font-display font-light text-chalk-50 text-balance leading-[0.95] tracking-tighter2 text-[44px] sm:text-[68px] md:text-[88px] lg:text-[104px] cursor-default"
@@ -194,13 +173,43 @@ export function Hero() {
               </a>
             </div>
 
-            {/* Mono signature one-liner below CTAs — replaces the right-side panel */}
+            {/* Currently line — postscript under the CTAs, reads as a live
+                update. No reveal class; it inherits visibility from the
+                parent's reveal so it doesn't get stuck below the fold. */}
+            <p className="max-w-prose2 mt-10 text-[15px] md:text-[16px] leading-relaxed text-chalk-300 italic font-display">
+              <span className="not-italic font-sans inline-flex items-center gap-1.5 mr-2 text-amber-soft align-middle">
+                <span className="relative inline-flex h-1.5 w-1.5">
+                  <span className="absolute inset-0 rounded-full bg-amber opacity-60 animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber" />
+                </span>
+                <span className="eyebrow !text-amber-soft">Currently</span>
+              </span>
+              Shipping an{" "}
+              <span className="not-italic text-accent-soft">
+                identification
+              </span>{" "}
+              platform and a feedback dashboard with ANU.
+            </p>
+
+            {/* Mono signature one-liner — physics / maths fingerprint, each
+                technical term preceded by a canonical glyph in a dimmer
+                colour so the symbols read as quiet annotation. */}
             <p className="mt-10 text-[11px] font-mono uppercase tracking-[0.22em] text-chalk-400 flex flex-wrap items-center gap-x-3 gap-y-1.5">
-              <span>ML · Full-stack</span>
+              <span>
+                <span className="text-chalk-500 mr-1.5">ℏ</span>Physics
+              </span>
               <span className="text-chalk-500">·</span>
-              <span>PyTorch · React</span>
+              <span>
+                <span className="text-chalk-500 mr-1.5">H</span>Information theory
+              </span>
               <span className="text-chalk-500">·</span>
-              <span>Canberra</span>
+              <span>
+                <span className="text-chalk-500 mr-1.5">Δ</span>Quantization
+              </span>
+              <span className="text-chalk-500">·</span>
+              <span>
+                <span className="text-chalk-500 mr-1.5">∇</span>Optimization
+              </span>
               <span className="text-chalk-500">·</span>
               <span className="text-amber-soft">Open to grad roles</span>
             </p>

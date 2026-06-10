@@ -7,6 +7,8 @@ import { WorkDetail } from "./pages/WorkDetail";
 import { ResearchDetail } from "./pages/ResearchDetail";
 import { ScrollToHash } from "./components/ScrollToHash";
 import { ScrollProgress } from "./components/ScrollProgress";
+import { TopoBackground } from "./components/TopoBackground";
+import { CustomCursor } from "./components/CustomCursor";
 import { useLenis } from "./hooks/useLenis";
 
 function AppShell() {
@@ -15,7 +17,9 @@ function AppShell() {
     <>
       <ScrollToHash />
       <ScrollProgress />
-      <div className="relative min-h-svh bg-ink-900 text-chalk-200 overflow-x-clip">
+      <TopoBackground />
+      <CustomCursor />
+      <div className="relative min-h-svh text-chalk-200 overflow-x-clip">
         <Nav />
         <main>
           <Routes>

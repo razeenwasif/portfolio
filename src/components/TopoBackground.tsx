@@ -286,6 +286,23 @@ const FRAGMENTS: Fragment[] = [
   { x: 130, y: 1090, text: "RANK 0 · 1 · 2 · 3", size: 10 },
   { x: 60, y: 660, text: "◊", size: 14 },
   { x: 460, y: 1130, text: "7,806 CLASSES · LONG-TAIL", size: 10 },
+
+  // Math / physics — scattered margin-note glyphs and short formulas
+  { x: 170, y: 120, text: "ψ ∈ ℋ", size: 13 },
+  { x: 240, y: 240, text: "ℏω = E", size: 12 },
+  { x: 720, y: 100, text: "S = −Σ p log p", size: 11 },
+  { x: 1240, y: 230, text: "e^(iπ) + 1 = 0", size: 11 },
+  { x: 90, y: 410, text: "θ ∈ [0, 2π]", size: 11 },
+  { x: 900, y: 360, text: "∫ e^(−x²) dx", size: 11 },
+  { x: 1140, y: 460, text: "∂L/∂θ", size: 13 },
+  { x: 480, y: 720, text: "δ(x − x₀)", size: 11 },
+  { x: 720, y: 560, text: "∇L(θ)", size: 14 },
+  { x: 1240, y: 700, text: "argmin ℒ", size: 12 },
+  { x: 320, y: 600, text: "ε → 0", size: 12 },
+  { x: 1080, y: 880, text: "ω = 2πf", size: 11 },
+  { x: 540, y: 1060, text: "∮ E·dl", size: 11 },
+  { x: 980, y: 1180, text: "lim x→∞", size: 11 },
+  { x: 1380, y: 1100, text: "F = ma", size: 11 },
 ];
 
 const CORNERS = [
