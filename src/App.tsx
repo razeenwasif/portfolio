@@ -6,6 +6,7 @@ import { Home } from "./pages/Home";
 import { WorkDetail } from "./pages/WorkDetail";
 import { ResearchDetail } from "./pages/ResearchDetail";
 import { ScrollToHash } from "./components/ScrollToHash";
+import { ScrollProgress } from "./components/ScrollProgress";
 import { useLenis } from "./hooks/useLenis";
 
 function AppShell() {
@@ -13,6 +14,7 @@ function AppShell() {
   return (
     <>
       <ScrollToHash />
+      <ScrollProgress />
       <div className="relative min-h-svh bg-ink-900 text-chalk-200 overflow-x-clip">
         <Nav />
         <main>
