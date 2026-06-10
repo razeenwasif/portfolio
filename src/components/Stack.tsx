@@ -4,8 +4,8 @@ import { useReveal } from "../hooks/useReveal";
 // Speed = seconds for one full loop. Tuned per row length so the visual cadence
 // matches across categories instead of long rows scrolling slowly and short
 // rows scrolling fast.
-const SECONDS_PER_ITEM = 4;
-const MIN_DURATION = 36;
+const SECONDS_PER_ITEM = 6;
+const MIN_DURATION = 55;
 
 export function Stack() {
   const r = useReveal<HTMLDivElement>();
@@ -87,7 +87,7 @@ function Strip({
               "font-display font-light uppercase tracking-tightish",
               "text-[44px] md:text-[64px] lg:text-[80px] leading-none",
               "px-7 md:px-10",
-              idx % 2 === 0 ? "text-chalk-50" : "text-chalk-500/80",
+              idx % 2 === 0 ? "text-chalk-50" : "text-accent-soft/55",
             ].join(" ")}
           >
             {item}
