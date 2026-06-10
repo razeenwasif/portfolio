@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useResumeModal } from "./ResumeModal";
 
 const links = [
   { to: "/#work", label: "Work" },
@@ -11,6 +12,7 @@ const links = [
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const { open: openResume } = useResumeModal();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -55,15 +57,13 @@ export function Nav() {
               </li>
             ))}
             <li>
-              <a
-                href="/main.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={openResume}
                 className="transition-colors duration-300 ease-soft hover:text-chalk-50"
-                download
               >
                 Resume
-              </a>
+              </button>
             </li>
           </ul>
 

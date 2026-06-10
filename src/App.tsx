@@ -9,12 +9,13 @@ import { ScrollToHash } from "./components/ScrollToHash";
 import { ScrollProgress } from "./components/ScrollProgress";
 import { TopoBackground } from "./components/TopoBackground";
 import { CustomCursor } from "./components/CustomCursor";
+import { ResumeModalProvider } from "./components/ResumeModal";
 import { useLenis } from "./hooks/useLenis";
 
 function AppShell() {
   useLenis();
   return (
-    <>
+    <ResumeModalProvider>
       <ScrollToHash />
       <ScrollProgress />
       <TopoBackground />
@@ -30,7 +31,7 @@ function AppShell() {
         </main>
         <Footer />
       </div>
-    </>
+    </ResumeModalProvider>
   );
 }
 

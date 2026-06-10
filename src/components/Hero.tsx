@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { site } from "../data/site";
 import { useReveal } from "../hooks/useReveal";
+import { useResumeModal } from "./ResumeModal";
 
 export function Hero() {
   const r1 = useReveal<HTMLDivElement>();
@@ -8,6 +9,7 @@ export function Hero() {
   const orbBRef = useRef<HTMLDivElement | null>(null);
   const [scrambleRev, setScrambleRev] = useState(0);
   const lastScrambleAtRef = useRef(0);
+  const { open: openResume } = useResumeModal();
 
   const handleNameHover = () => {
     const now = performance.now();
@@ -159,15 +161,13 @@ export function Hero() {
                   />
                 </svg>
               </a>
-              <a
-                href="/main.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={openResume}
                 className="btn-ghost"
-                download
               >
-                Download Resume
-              </a>
+                Resume
+              </button>
               <a href="#contact" className="btn-ghost">
                 Contact
               </a>
