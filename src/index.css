@@ -207,6 +207,28 @@
     animation: fade-up 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
+  /* Topo dash animations — `stroke-dashoffset` cycles by an exact multiple of
+     the dash+gap length so the loop is seamless. */
+  @keyframes topo-march-dash {
+    to {
+      stroke-dashoffset: -44; /* 4 × (5 + 6) */
+    }
+  }
+
+  @keyframes topo-march-dot {
+    to {
+      stroke-dashoffset: -36; /* 6 × (1 + 5) */
+    }
+  }
+
+  .animate-topo-dash {
+    animation: topo-march-dash 9s linear infinite;
+  }
+
+  .animate-topo-dot {
+    animation: topo-march-dot 5s linear infinite;
+  }
+
   .marquee-mask {
     -webkit-mask-image: linear-gradient(
       to right,
