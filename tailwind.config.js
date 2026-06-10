@@ -24,6 +24,11 @@ export default {
           soft: "#a99cf9",
           deep: "#5e4dd1",
         },
+        amber: {
+          DEFAULT: "#ffb86c",
+          soft: "#ffd29c",
+          deep: "#ee8c2a",
+        },
       },
       fontFamily: {
         display: ['"Fraunces"', "ui-serif", "Georgia", "serif"],

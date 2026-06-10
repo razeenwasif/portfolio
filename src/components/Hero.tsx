@@ -175,10 +175,10 @@ export function Hero() {
 
               <div className="flex items-center justify-between">
                 <p className="eyebrow">Currently</p>
-                <span className="inline-flex items-center gap-1.5 text-[11px] text-chalk-300">
+                <span className="inline-flex items-center gap-1.5 text-[11px] text-amber-soft">
                   <span className="relative inline-flex h-1.5 w-1.5">
-                    <span className="absolute inset-0 rounded-full bg-accent opacity-60 animate-ping" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                    <span className="absolute inset-0 rounded-full bg-amber opacity-60 animate-ping" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber" />
                   </span>
                   Online
                 </span>
@@ -256,7 +256,7 @@ function RotatingWord({
         <span
           key={w}
           aria-hidden={idx !== i}
-          className="col-start-1 row-start-1 italic text-chalk-200"
+          className="col-start-1 row-start-1 italic text-amber-soft"
           style={{
             opacity: idx === i ? 1 : 0,
             transition: `opacity ${transition}ms cubic-bezier(0.22, 1, 0.36, 1)`,

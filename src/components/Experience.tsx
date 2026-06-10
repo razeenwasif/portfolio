@@ -47,7 +47,10 @@ export function Experience() {
                   >
                     <span
                       aria-hidden
-                      className="absolute -left-[3px] top-9 h-1.5 w-1.5 rounded-full bg-accent/80 ring-4 ring-ink-900"
+                      className={[
+                        "absolute -left-[3px] top-9 h-1.5 w-1.5 rounded-full ring-4 ring-ink-900",
+                        /now\s*$/i.test(t.year) ? "bg-amber" : "bg-accent/80",
+                      ].join(" ")}
                     />
                     <div className="col-span-12 sm:col-span-3 font-mono text-[12px] text-chalk-400 pt-1">
                       {t.year}

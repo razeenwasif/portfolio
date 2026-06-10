@@ -2,6 +2,11 @@ import { Link } from "react-router-dom";
 import { research, type Research as ResearchItem } from "../data/site";
 import { useReveal } from "../hooks/useReveal";
 
+function isOngoing(status: string): boolean {
+  const s = status.toLowerCase();
+  return s.includes("progress") || s.includes("ongoing") || s.includes("active");
+}
+
 export function Research() {
   const r = useReveal<HTMLDivElement>();
 
@@ -39,7 +44,14 @@ function ResearchCard({ item, delay }: { item: ResearchItem; delay: number }) {
         <span className="font-mono text-[12px] text-chalk-500 group-hover:text-accent-soft transition-colors duration-500 ease-soft">
           {item.index}
         </span>
-        <span className="text-[10px] font-mono uppercase tracking-wider text-chalk-300 px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.02]">
+        <span
+          className={[
+            "text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full border",
+            isOngoing(item.status)
+              ? "text-amber-soft border-amber/40 bg-amber/[0.06]"
+              : "text-chalk-300 border-white/10 bg-white/[0.02]",
+          ].join(" ")}
+        >
           {item.status}
         </span>
       </div>
