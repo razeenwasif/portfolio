@@ -1,9 +1,18 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { projects, type Project } from "../data/site";
 import { useReveal } from "../hooks/useReveal";
 
+const INITIAL_VISIBLE = 4;
+
 export function Projects() {
   const r = useReveal<HTMLDivElement>();
+  const [expanded, setExpanded] = useState(false);
+  const canCollapse = projects.length > INITIAL_VISIBLE;
+  const visible = expanded || !canCollapse
+    ? projects
+    : projects.slice(0, INITIAL_VISIBLE);
+  const hiddenCount = projects.length - INITIAL_VISIBLE;
 
   return (
     <section id="work" className="relative py-28 md:py-40">
@@ -16,21 +25,61 @@ export function Projects() {
             </h2>
           </div>
           <span className="hidden sm:inline-block text-[12px] font-mono text-chalk-400">
-            {String(projects.length).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+            {String(visible.length).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
           </span>
         </div>
 
         <ul className="space-y-3">
-          {projects.map((p, i) => (
-            <ProjectRow key={p.index} project={p} delay={i * 60} />
+          {visible.map((p, i) => (
+            <ProjectRow
+              key={p.index}
+              project={p}
+              delay={i * 60}
+              fadeIn={expanded && i >= INITIAL_VISIBLE}
+              fadeDelay={(i - INITIAL_VISIBLE) * 60}
+            />
           ))}
         </ul>
+
+        {canCollapse && (
+          <div className="mt-10 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setExpanded((v) => !v)}
+              aria-expanded={expanded}
+              className="inline-flex items-center gap-3 text-[12px] font-mono uppercase tracking-[0.18em] text-chalk-300 hover:text-accent-soft transition-colors duration-300 ease-soft"
+            >
+              <span aria-hidden className="h-px w-10 bg-white/15" />
+              {expanded ? "Show less" : `Show ${hiddenCount} more`}
+              <span
+                aria-hidden
+                className={[
+                  "inline-block transition-transform duration-300 ease-soft",
+                  expanded ? "rotate-180" : "",
+                ].join(" ")}
+              >
+                ↓
+              </span>
+              <span aria-hidden className="h-px w-10 bg-white/15" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-function ProjectRow({ project, delay }: { project: Project; delay: number }) {
+function ProjectRow({
+  project,
+  delay,
+  fadeIn,
+  fadeDelay,
+}: {
+  project: Project;
+  delay: number;
+  fadeIn?: boolean;
+  fadeDelay?: number;
+}) {
   const r = useReveal<HTMLLIElement>();
 
   const inner = (
@@ -114,8 +163,12 @@ function ProjectRow({ project, delay }: { project: Project; delay: number }) {
   return (
     <li
       ref={r}
-      className="reveal"
-      style={{ transitionDelay: `${delay}ms` }}
+      className={["reveal", fadeIn ? "animate-fade-up" : ""].join(" ")}
+      style={
+        fadeIn
+          ? { animationDelay: `${fadeDelay ?? 0}ms` }
+          : { transitionDelay: `${delay}ms` }
+      }
     >
       {project.slug ? (
         <Link
