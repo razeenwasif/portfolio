@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 /**
  * Ambient background overlay — eight pre-computed topographic contour designs
  * (dbrand Area-51-ish) that crossfade on a 10-second cycle, plus a static
- * layer of scattered technical fragments and corner registration marks.
+ * survey grid, scattered technical fragments, and corner registration marks.
  *
  * All geometry is computed once at module load — the cycle itself is just
  * an opacity swap between pre-rendered SVG groups.
@@ -20,15 +20,20 @@ type DesignConfig = {
 };
 
 /**
- * Eight distinct compositions — each varies peak placement, peak strength,
- * and noise phase/frequency so the topology reads differently every cycle.
+ * Eight distinct compositions. Each design scatters several medium peaks
+ * (and a basin or two — negative amp) across the frame so closed loops show
+ * up everywhere, like the dbrand reference, rather than only at the corners.
+ * Peak placement still gives each design a distinct centre of gravity.
  */
 const DESIGNS: DesignConfig[] = [
-  // 1. Top-right + bottom-left (the resting state)
+  // 1. Top-right + bottom-left emphasis (the resting state)
   {
     peaks: [
-      { cx: 1380, cy: 220, amp: 1.8, sigma: 180000 },
-      { cx: 230, cy: 1000, amp: 1.8, sigma: 200000 },
+      { cx: 1320, cy: 260, amp: 1.3, sigma: 60000 },
+      { cx: 260, cy: 940, amp: 1.3, sigma: 70000 },
+      { cx: 760, cy: 620, amp: 1.0, sigma: 45000 },
+      { cx: 520, cy: 180, amp: -0.9, sigma: 55000 },
+      { cx: 1180, cy: 950, amp: 1.1, sigma: 50000 },
     ],
     noisePhase: 0,
     noiseFreq: 1.0,
@@ -36,8 +41,11 @@ const DESIGNS: DesignConfig[] = [
   // 2. Top-left + bottom-right — mirrored
   {
     peaks: [
-      { cx: 240, cy: 220, amp: 1.7, sigma: 180000 },
-      { cx: 1370, cy: 1000, amp: 1.9, sigma: 210000 },
+      { cx: 280, cy: 240, amp: 1.2, sigma: 65000 },
+      { cx: 1340, cy: 980, amp: 1.3, sigma: 60000 },
+      { cx: 880, cy: 420, amp: 1.0, sigma: 40000 },
+      { cx: 1100, cy: 150, amp: -0.8, sigma: 50000 },
+      { cx: 420, cy: 760, amp: 1.1, sigma: 55000 },
     ],
     noisePhase: 1.3,
     noiseFreq: 0.95,
@@ -45,8 +53,11 @@ const DESIGNS: DesignConfig[] = [
   // 3. Top-centre + bottom-centre — vertical bands
   {
     peaks: [
-      { cx: 800, cy: 180, amp: 1.7, sigma: 220000 },
-      { cx: 800, cy: 1020, amp: 1.7, sigma: 220000 },
+      { cx: 800, cy: 180, amp: 1.2, sigma: 70000 },
+      { cx: 800, cy: 1020, amp: 1.2, sigma: 70000 },
+      { cx: 340, cy: 560, amp: 1.0, sigma: 45000 },
+      { cx: 1260, cy: 620, amp: 1.0, sigma: 45000 },
+      { cx: 800, cy: 600, amp: -0.9, sigma: 60000 },
     ],
     noisePhase: 2.5,
     noiseFreq: 1.1,
@@ -54,24 +65,34 @@ const DESIGNS: DesignConfig[] = [
   // 4. Left-centre + right-centre — horizontal bands
   {
     peaks: [
-      { cx: 180, cy: 600, amp: 1.7, sigma: 220000 },
-      { cx: 1420, cy: 600, amp: 1.7, sigma: 220000 },
+      { cx: 220, cy: 600, amp: 1.2, sigma: 70000 },
+      { cx: 1380, cy: 600, amp: 1.2, sigma: 70000 },
+      { cx: 760, cy: 260, amp: 1.0, sigma: 45000 },
+      { cx: 840, cy: 980, amp: 1.0, sigma: 45000 },
     ],
     noisePhase: 3.8,
     noiseFreq: 1.05,
   },
-  // 5. Single large central peak — concentric flow
+  // 5. Big central peak ringed by satellites
   {
-    peaks: [{ cx: 820, cy: 600, amp: 2.6, sigma: 260000 }],
+    peaks: [
+      { cx: 820, cy: 600, amp: 1.6, sigma: 90000 },
+      { cx: 300, cy: 300, amp: 1.0, sigma: 50000 },
+      { cx: 1300, cy: 900, amp: 1.0, sigma: 50000 },
+      { cx: 1350, cy: 250, amp: -0.8, sigma: 45000 },
+      { cx: 250, cy: 950, amp: -0.8, sigma: 45000 },
+    ],
     noisePhase: 5.1,
     noiseFreq: 0.9,
   },
   // 6. Three-peak triangle — top + bottom-left + bottom-right
   {
     peaks: [
-      { cx: 800, cy: 220, amp: 1.4, sigma: 150000 },
-      { cx: 280, cy: 1000, amp: 1.4, sigma: 150000 },
-      { cx: 1340, cy: 1000, amp: 1.4, sigma: 150000 },
+      { cx: 800, cy: 220, amp: 1.2, sigma: 55000 },
+      { cx: 300, cy: 980, amp: 1.2, sigma: 55000 },
+      { cx: 1320, cy: 980, amp: 1.2, sigma: 55000 },
+      { cx: 820, cy: 720, amp: -0.9, sigma: 60000 },
+      { cx: 1500, cy: 400, amp: 0.9, sigma: 40000 },
     ],
     noisePhase: 6.3,
     noiseFreq: 1.15,
@@ -79,17 +100,24 @@ const DESIGNS: DesignConfig[] = [
   // 7. Three-peak triangle — bottom + top-left + top-right (inverted)
   {
     peaks: [
-      { cx: 800, cy: 1000, amp: 1.4, sigma: 150000 },
-      { cx: 280, cy: 220, amp: 1.4, sigma: 150000 },
-      { cx: 1340, cy: 220, amp: 1.4, sigma: 150000 },
+      { cx: 800, cy: 1000, amp: 1.2, sigma: 55000 },
+      { cx: 290, cy: 240, amp: 1.2, sigma: 55000 },
+      { cx: 1330, cy: 240, amp: 1.2, sigma: 55000 },
+      { cx: 800, cy: 500, amp: -0.9, sigma: 60000 },
+      { cx: 120, cy: 800, amp: 0.9, sigma: 40000 },
     ],
     noisePhase: 7.5,
     noiseFreq: 1.0,
   },
-  // 8. Far-corner sweep — single big peak in the upper-right, pulling
-  //    contours diagonally across the viewport
+  // 8. Diagonal sweep — opposing far corners pull contours across the frame
   {
-    peaks: [{ cx: 1500, cy: 120, amp: 2.6, sigma: 280000 }],
+    peaks: [
+      { cx: 1480, cy: 160, amp: 1.5, sigma: 80000 },
+      { cx: 160, cy: 1040, amp: 1.5, sigma: 80000 },
+      { cx: 820, cy: 620, amp: 1.0, sigma: 50000 },
+      { cx: 500, cy: 300, amp: -0.8, sigma: 45000 },
+      { cx: 1150, cy: 900, amp: -0.8, sigma: 45000 },
+    ],
     noisePhase: 8.7,
     noiseFreq: 0.85,
   },
@@ -99,13 +127,18 @@ function makeField(config: DesignConfig) {
   const ph = config.noisePhase;
   const fq = config.noiseFreq;
   return (x: number, y: number): number => {
+    // Higher-frequency octaves than a classic "two big hills" field — the
+    // dbrand reference is a busy terrain of small islands and basins, so
+    // feature wavelengths sit around 350–1000px in viewBox units.
     const noise =
-      Math.sin(x * 0.0035 * fq + 0.5 + ph) *
-        Math.cos(y * 0.0042 * fq + 1.2 + ph) +
-      0.6 *
-        Math.sin(x * 0.0075 * fq + y * 0.003 * fq + 2.1 + ph * 1.3) +
-      0.35 *
-        Math.cos(x * 0.002 * fq - y * 0.0055 * fq + 0.8 + ph * 0.7);
+      Math.sin(x * 0.0058 * fq + 0.5 + ph) *
+        Math.cos(y * 0.0066 * fq + 1.2 + ph) +
+      0.65 *
+        Math.sin(x * 0.0105 * fq + y * 0.0048 * fq + 2.1 + ph * 1.3) +
+      0.45 *
+        Math.cos(x * 0.0036 * fq - y * 0.0088 * fq + 0.8 + ph * 0.7) +
+      0.3 *
+        Math.sin(x * 0.0152 * fq - y * 0.0124 * fq + 1.6 + ph * 1.7);
 
     let peakSum = 0;
     for (const p of config.peaks) {
@@ -118,7 +151,7 @@ function makeField(config: DesignConfig) {
   };
 }
 
-const CELL = 26;
+const CELL = 22;
 const COLS = Math.ceil(VIEWBOX_W / CELL) + 1;
 const ROWS = Math.ceil(VIEWBOX_H / CELL) + 1;
 
@@ -211,9 +244,9 @@ function marchingSquares(samples: number[], threshold: number): string {
   return d.trim();
 }
 
-// 10 thresholds at ~0.4 spacing — roughly 1.7× the previous contour density.
+// 12 thresholds at 0.35 spacing — dense banding like the reference.
 const THRESHOLDS = [
-  -1.5, -1.1, -0.7, -0.3, 0.1, 0.5, 0.9, 1.3, 1.7, 2.1,
+  -1.6, -1.25, -0.9, -0.55, -0.2, 0.15, 0.5, 0.85, 1.2, 1.55, 1.9, 2.25,
 ];
 
 type TopoLine = { d: string; variant: 0 | 1 | 2 | 3 };
@@ -241,32 +274,82 @@ type Variant = {
   animClass: string | undefined;
 };
 
+/**
+ * Strictly alternating solid / dashed by elevation — like real topo maps
+ * (solid index contours, dashed intermediates) and like the reference skin.
+ * Solid lines read brighter; dashed sit a step dimmer.
+ */
 const VARIANTS: readonly Variant[] = [
   {
     stroke: "rgb(245,245,247)",
-    strokeOpacity: 0.1,
-    dash: undefined,
-    animClass: undefined,
-  },
-  {
-    stroke: "rgb(186,168,250)",
-    strokeOpacity: 0.22,
+    strokeOpacity: 0.038,
     dash: undefined,
     animClass: undefined,
   },
   {
     stroke: "rgb(245,245,247)",
-    strokeOpacity: 0.1,
+    strokeOpacity: 0.022,
     dash: "5 6",
     animClass: "animate-topo-dash",
   },
   {
     stroke: "rgb(186,168,250)",
-    strokeOpacity: 0.26,
+    strokeOpacity: 0.068,
+    dash: undefined,
+    animClass: undefined,
+  },
+  {
+    stroke: "rgb(186,168,250)",
+    strokeOpacity: 0.05,
     dash: "1 5",
     animClass: "animate-topo-dot",
   },
 ] as const;
+
+/**
+ * Survey grid — faint full-span section lines with brighter `+` crosshair
+ * ticks at the intersections, straight from the reference skin. Static; it
+ * does not cycle with the contour designs.
+ */
+const GRID_X = [400, 800, 1200];
+const GRID_Y = [400, 800];
+const CROSS_ARM = 11;
+
+function gridLinesPath(): string {
+  const v = GRID_X.map((x) => `M${x},0 L${x},${VIEWBOX_H}`).join(" ");
+  const h = GRID_Y.map((y) => `M0,${y} L${VIEWBOX_W},${y}`).join(" ");
+  return `${v} ${h}`;
+}
+
+function gridCrossesPath(): string {
+  let d = "";
+  for (const x of GRID_X) {
+    for (const y of GRID_Y) {
+      d +=
+        `M${x - CROSS_ARM},${y} L${x + CROSS_ARM},${y} ` +
+        `M${x},${y - CROSS_ARM} L${x},${y + CROSS_ARM} `;
+    }
+  }
+  return d.trim();
+}
+
+const GRID_LINES_D = gridLinesPath();
+const GRID_CROSSES_D = gridCrossesPath();
+
+/** Summit `+` marker path for one design — one cross per positive peak. */
+function peakMarkersPath(config: DesignConfig): string {
+  const ARM = 7;
+  return config.peaks
+    .filter((p) => p.amp > 0)
+    .map(
+      (p) =>
+        `M${p.cx - ARM},${p.cy} L${p.cx + ARM},${p.cy} ` +
+        `M${p.cx},${p.cy - ARM} L${p.cx},${p.cy + ARM}`,
+    )
+    .join(" ");
+}
+
+const PEAK_MARKERS: string[] = DESIGNS.map(peakMarkersPath);
 
 type Fragment = { x: number; y: number; text: string; size?: number };
 
@@ -340,6 +423,23 @@ export function TopoBackground() {
         preserveAspectRatio="xMidYMid slice"
         className="w-full h-full"
       >
+        {/* Survey grid — static section lines + crosshair intersections,
+            sitting under the contours */}
+        <g fill="none" strokeLinecap="round">
+          <path
+            d={GRID_LINES_D}
+            stroke="rgb(245,245,247)"
+            strokeOpacity="0.045"
+            strokeWidth="0.7"
+          />
+          <path
+            d={GRID_CROSSES_D}
+            stroke="rgb(245,245,247)"
+            strokeOpacity="0.18"
+            strokeWidth="1"
+          />
+        </g>
+
         {/* All eight pre-rendered topo designs, layered. Only one is visible
             at a time; opacity transitions for a smooth crossfade. Screen
             blending makes the overlap during a crossfade additive — the
@@ -348,7 +448,7 @@ export function TopoBackground() {
           {ALL_DESIGNS.map((lines, designIdx) => (
             <g
               key={designIdx}
-              strokeWidth="0.8"
+              strokeWidth="2.1"
               fill="none"
               strokeLinecap="round"
               style={{
@@ -369,6 +469,14 @@ export function TopoBackground() {
                   />
                 );
               })}
+              {/* Summit markers — a small + at each positive peak, fading
+                  in and out with its design */}
+              <path
+                d={PEAK_MARKERS[designIdx]}
+                stroke="rgb(245,245,247)"
+                strokeOpacity="0.25"
+                strokeWidth="1"
+              />
             </g>
           ))}
         </g>
