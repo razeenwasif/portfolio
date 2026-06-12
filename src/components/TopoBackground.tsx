@@ -399,7 +399,15 @@ const CYCLE_MS = 10000;
 const CROSSFADE_MS = 3500;
 
 export function TopoBackground() {
-  const [activeIdx, setActiveIdx] = useState(0);
+  // Only the active design and the one fading out are mounted — keeping all
+  // eight in the DOM meant ~100 huge paths with dash animations running on
+  // invisible groups. `activeOn` starts false for a freshly mounted active
+  // group so its opacity can transition 0 → 1.
+  const [pair, setPair] = useState<{ active: number; prev: number | null }>({
+    active: 0,
+    prev: null,
+  });
+  const [activeOn, setActiveOn] = useState(true);
 
   useEffect(() => {
     if (
@@ -408,10 +416,31 @@ export function TopoBackground() {
     )
       return;
     const id = window.setInterval(() => {
-      setActiveIdx((v) => (v + 1) % ALL_DESIGNS.length);
+      setPair((p) => ({
+        active: (p.active + 1) % ALL_DESIGNS.length,
+        prev: p.active,
+      }));
+      setActiveOn(false);
     }, CYCLE_MS);
     return () => window.clearInterval(id);
   }, []);
+
+  // On cycle: let the new group paint at opacity 0, flip it on next frame so
+  // the CSS transition runs, then unmount the outgoing group once it's done.
+  useEffect(() => {
+    if (pair.prev === null) return;
+    let raf = requestAnimationFrame(() => {
+      raf = requestAnimationFrame(() => setActiveOn(true));
+    });
+    const t = window.setTimeout(
+      () => setPair((p) => ({ ...p, prev: null })),
+      CROSSFADE_MS + 100,
+    );
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(t);
+    };
+  }, [pair]);
 
   return (
     <div
@@ -440,19 +469,21 @@ export function TopoBackground() {
           />
         </g>
 
-        {/* All eight pre-rendered topo designs, layered. Only one is visible
-            at a time; opacity transitions for a smooth crossfade. Screen
+        {/* The active design plus the outgoing one, crossfading. Screen
             blending makes the overlap during a crossfade additive — the
             "between" state reads as full instead of dim. */}
         <g style={{ mixBlendMode: "screen" }}>
-          {ALL_DESIGNS.map((lines, designIdx) => (
+          {[pair.prev, pair.active].map((designIdx) => {
+            if (designIdx === null) return null;
+            const lines = ALL_DESIGNS[designIdx];
+            return (
             <g
               key={designIdx}
               strokeWidth="2.1"
               fill="none"
               strokeLinecap="round"
               style={{
-                opacity: designIdx === activeIdx ? 1 : 0,
+                opacity: designIdx === pair.active && activeOn ? 1 : 0,
                 transition: `opacity ${CROSSFADE_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
               }}
             >
@@ -478,7 +509,8 @@ export function TopoBackground() {
                 strokeWidth="1"
               />
             </g>
-          ))}
+            );
+          })}
         </g>
 
         {/* Scattered technical fragments — static, do not cycle. Hidden on

@@ -30,6 +30,10 @@ export type ProjectImage = {
   src: string;
   alt: string;
   caption?: string;
+  /** Intrinsic pixel dimensions — lets the browser reserve layout space
+      before the image loads (no CLS). */
+  width: number;
+  height: number;
 };
 
 export type ProjectDetail = {
@@ -126,7 +130,9 @@ export const projects: Project[] = [
       ],
       gallery: [
         {
-          src: "/projects/prism/main.png",
+          src: "/projects/prism/main.webp",
+          width: 2044,
+          height: 1079,
           alt: "Prism Command Center — AutoML pipeline with live metrics tiles, dataset preview, and natural-language query box",
           caption:
             "Command Center — pipeline configuration on the left (NL query box, dataset upload, target column), live metrics across the top (log loss, ROC AUC, AUC PR, accuracy), full dataset preview with per-column distributions and breakdown plots below.",
@@ -199,19 +205,25 @@ export const projects: Project[] = [
       ],
       gallery: [
         {
-          src: "/projects/oracle/main.png",
+          src: "/projects/oracle/main.webp",
+          width: 2043,
+          height: 1077,
           alt: "Oracle live app — Your Library view with identified plants as cards, totals across the top",
           caption:
             "Oracle live — the user's library view after running identifications. Totals tile across the top (total, unique species, rare finds, daily streak), and a grid of identified specimens (Gentiana scabra, Olea europaea, etc.) with the predicted family, status, and confidence under each card.",
         },
         {
-          src: "/projects/oracle/figures-1.png",
+          src: "/projects/oracle/figures-1.webp",
+          width: 1214,
+          height: 1145,
           alt: "Oracle paper figures 1–3: score progression across experiments, val/Kaggle divergence, validation-accuracy-as-Kaggle-predictor",
           caption:
             "Paper figures 1–3 — score progression across 11 submissions (best Kaggle public F1 climbing to 010), the val/Kaggle distribution gap, and a per-experiment correlation between validation accuracy and the Kaggle public score.",
         },
         {
-          src: "/projects/oracle/figures-2.png",
+          src: "/projects/oracle/figures-2.webp",
+          width: 1194,
+          height: 767,
           alt: "Oracle paper figures 4–5: 015 validation climbs while Kaggle stalls + species image counts before and after the 500 cap",
           caption:
             "Paper figures 4–5 — adding capacity in the wrong distribution shape (015 validation climbs while Kaggle public F1 stalls), and the species-image-count histogram before/after the 500-image cap that collapses the right tail without rescuing the 1,644 species under 100 images.",
@@ -289,7 +301,9 @@ export const projects: Project[] = [
       ],
       gallery: [
         {
-          src: "/projects/nexus/main.png",
+          src: "/projects/nexus/main.webp",
+          width: 1639,
+          height: 1046,
           alt: "Nexus Silicon Distributed Fleet — pod inventory with live device cards, GPU utilisation and temperature per node",
           caption:
             "Silicon Distributed Fleet view — total-component + memory-allocation rollup on the left, recent-deploys list, then the live device grid (Razeen-Home-PC, B1 NVIDIA GeForce RTX 4090) with utilisation, temperature, and power per node. Monochrome glass shell with status as the only accent.",
@@ -354,7 +368,9 @@ export const projects: Project[] = [
       ],
       gallery: [
         {
-          src: "/projects/onyx/main.png",
+          src: "/projects/onyx/main.webp",
+          width: 2029,
+          height: 942,
           alt: "Onyx markdown vault — file tree, source pane, live render pane, backlinks + outline + graph + calendar panels",
           caption:
             "Onyx running a TinyML literature-review vault — file tree on the left, source pane in the middle, live render pane on the right. Backlinks, outline, ASCII graph view, and monthly calendar panels stacked along the far right sidebar.",
@@ -419,7 +435,9 @@ export const projects: Project[] = [
       ],
       gallery: [
         {
-          src: "/projects/audiopulse/main.png",
+          src: "/projects/audiopulse/main.webp",
+          width: 2018,
+          height: 941,
           alt: "AudioPulse TUI — library on the left, full track list in the centre, podcasts column, now-playing tile with album art + lyrics + waveform",
           caption:
             "AudioPulse running with a logged-in Spotify session — Your Library on the left rail, Liked Songs track list in the centre, Podcasts column on the right, and the now-playing tile (album art in 24-bit half-blocks, lyrics, and waveform) docked at the bottom-right.",
@@ -484,7 +502,9 @@ export const projects: Project[] = [
       ],
       gallery: [
         {
-          src: "/projects/boxtube/main.png",
+          src: "/projects/boxtube/main.webp",
+          width: 2010,
+          height: 944,
           alt: "BoxTube terminal client — channel videos grid with in-terminal thumbnails and a preview pane on the right",
           caption:
             "BoxTube running in a kitty terminal — top-bar tabs for All / Shorts / Music / Gaming / News, subscriptions navigation on the left, a grid of channel videos (3Blue1Brown) with real thumbnails rendered inline via the kitty graphics protocol, and a video preview pane on the right.",
@@ -786,13 +806,17 @@ export const research: Research[] = [
       ],
       gallery: [
         {
-          src: "/projects/oracle/figures-1.png",
+          src: "/projects/oracle/figures-1.webp",
+          width: 1214,
+          height: 1145,
           alt: "PlantCLEF score progression across 11 submissions, val/Kaggle distribution gap, and validation-accuracy-as-Kaggle-predictor",
           caption:
             "Figures 1–3 — best Kaggle public F1 across 11 submissions climbing to 010 (the partial-unfreeze breakthrough), the val/Kaggle distribution gap, and a per-experiment correlation between validation accuracy and Kaggle public score.",
         },
         {
-          src: "/projects/oracle/figures-2.png",
+          src: "/projects/oracle/figures-2.webp",
+          width: 1194,
+          height: 767,
           alt: "015 validation climbs while Kaggle stalls + species image counts before and after the 500 cap",
           caption:
             "Figures 4–5 — 015 validation rises while Kaggle public F1 stalls (capacity added to the wrong distribution shape), and the species-image-count histogram before/after the 500-image cap that collapses the right tail without rescuing the 1,644 species under 100 images.",

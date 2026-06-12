@@ -42,3 +42,6 @@ Thumbs.db
 /main.pdf
 /main.aux
 /main.out
+
+# Local reference images (not used by the site)
+/assets/
