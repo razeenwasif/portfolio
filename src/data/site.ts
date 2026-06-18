@@ -313,6 +313,143 @@ export const projects: Project[] = [
   },
   {
     index: "04",
+    slug: "flux",
+    title: "Flux · AI-Native Desktop Browser",
+    year: "2026",
+    summary:
+      "An AI-native desktop browser built in Rust + Tauri v2 — native multi-tab browsing, a real-PTY terminal docked as a sidebar column, and a fully local LLM agent (Gemma 12B via Ollama / llama.cpp) that reads the page DOM and performs approved, injection-guarded actions. Zero-copy DOM IPC pipeline, webview hibernation, Brave-engine adblock, and an AES-256-GCM password vault — all on-device, no cloud.",
+    stack: ["Rust", "Tauri", "SolidJS", "TypeScript", "Ollama"],
+    insights: ["Local Gemma agent", "Zero-copy DOM IPC", "8–15 MB binary"],
+    links: [{ label: "Source", href: "https://github.com/razeenwasif/flux" }],
+    detail: {
+      tagline:
+        "A privacy-first desktop browser with a DOM-aware terminal and a local AI agent — Rust + Tauri, no Electron, no cloud.",
+      overview: [
+        "Flux is a desktop browser built on Rust + Tauri v2 instead of an Electron / Chromium fork. It uses the OS's native webviews (WebView2, WKWebView, WebKitGTK) rather than shipping a 180 MB Chromium, and runs the terminal and LLM on native Rust threads with no V8 GC pauses. The chrome is SolidJS — fine-grained signals, no virtual DOM — laid out Arc-style: a collapsible left sidebar, the active tab floating in a rounded content card, a terminal as a vertical right column, and the agent docked far-right.",
+        "Three capabilities set it apart from a normal browser. A real OS PTY terminal lives as a persistent sidebar column with a DOM-aware CLI (`flux url|dom|links|extract-json` reads the active page). A fully local LLM agent — Gemma-class 12B via Ollama or in-process llama.cpp — grounds itself in the page DOM, and on a `/act` prompt returns a structured action that Flux injects with a preview-and-approve workflow and a destructive-action deny-list. And the whole thing is engineered to a strict performance budget, leaning on a zero-copy DOM pipeline that shares 5 MB page snapshots as `Arc<[u8]>` across the terminal, agent, and embedder with a single memcpy at the boundary.",
+      ],
+      stats: [
+        { label: "Binary", value: "8–15 MB", sub: "vs Electron 180–250 MB" },
+        { label: "Idle RAM", value: "<80 MB", sub: "Shell + daemon" },
+        { label: "Agent", value: "Gemma 12B", sub: "Local, no token cost" },
+        { label: "DOM snapshot", value: "<12 ms", sub: "5 MB, zero-copy IPC" },
+      ],
+      sections: [
+        {
+          eyebrow: "Architecture",
+          title: "Rust + Tauri over Electron — a zero-copy DOM pipeline",
+          body: [
+            "The motivating decision is to refuse the Chromium tax. Native OS webviews mean no bundled 180 MB engine and no second JS runtime for the chrome; the trade-off accepted is engine heterogeneity, handled with a DOM-baseline action compiler that only emits universally-supported APIs.",
+            "DOM snapshots are captured in the Rust core (HTML + visible text, capped ~1 MiB) and shared as a single `Arc<[u8]>` allocation that the terminal, agent, and embedder all read — versus Electron's two-stage structured-clone + JSON round-trip. Background tabs idle past a timeout have their native webview destroyed (RAM freed, tile stays in the strip and reloads on activation); workspace switches destroy webviews entirely, so an inactive space is kilobytes of metadata.",
+          ],
+          bullets: [
+            "Native OS webviews (WebView2 / WKWebView / WebKitGTK) — no shipped Chromium",
+            "SolidJS chrome — fine-grained signals, no VDOM diff",
+            "Zero-copy DOM snapshots shared as `Arc<[u8]>` across subsystems",
+            "Webview hibernation + Belady/Markov eviction under memory pressure",
+          ],
+        },
+        {
+          eyebrow: "Local agent",
+          title: "An on-device LLM that reads the page and acts under approval",
+          body: [
+            "The agent runs entirely locally — Gemma-class 12B through Ollama (or an in-process llama.cpp FFI backend), no cloud, no API key, no token cost. A chat-first sidebar grounds itself in the page's text; a `/act` prefix has the agent read the DOM and return a structured action, which Flux compiles into injection-safe JS and highlights for the user to Approve or Skip.",
+            "Safety is built into the action path: a destructive-action guard in the injected JS denies delete / pay / order / refund operations on a deny-list, a defense against prompt injection. Semantic features (omnibox suggestions, offline-archive search) run on EmbeddingGemma vectors with an instant hashing fallback when no model is present.",
+          ],
+          bullets: [
+            "Local Gemma 12B via Ollama or in-process llama.cpp — fully offline",
+            "`/act` reads the DOM, returns a structured action, previews before injecting",
+            "Destructive-action deny-list guards against prompt injection",
+            "EmbeddingGemma semantic search with a no-model hashing fallback",
+          ],
+        },
+        {
+          eyebrow: "Browser + terminal",
+          title: "A real PTY terminal and a full privacy stack",
+          body: [
+            "The terminal is a real OS PTY (portable-pty) rendered in a persistent right-side column, with a DOM-aware CLI that can read the active page and optional tmux persistence across restarts. The browser side ships the table stakes — session restore, find-in-page, split view, command palette, tab groups, Chrome import — plus a Brave-engine content blocker (full EasyList + EasyPrivacy, auto-updated) and an AES-256-GCM password vault with a Proton Pass importer and OS-keychain key storage.",
+          ],
+          bullets: [
+            "Real PTY terminal with a DOM-aware CLI and optional tmux persistence",
+            "Brave `adblock` engine — EasyList + EasyPrivacy, per-site shields",
+            "AES-256-GCM vault — Proton Pass import, OS-keychain data key, Argon2id master password",
+            "Arc-style vertical UI: sidebar / floating content card / terminal column / agent dock",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    index: "05",
+    slug: "omni",
+    title: "Omni · From-Scratch Search Engine",
+    year: "2026",
+    summary:
+      "A personal search engine hand-rolled in Rust (std-only core) with a Go crawler and a Python eval harness. BM25F lexical retrieval fused with 768-dim semantic embeddings via Reciprocal Rank Fusion, an HNSW ANN index, passage-level retrieval, live incremental indexing with background segment merges, and optional local-LLM RAG answers. Indexes a ~12k-doc academic corpus and powers the Flux browser's omnibox.",
+    stack: ["Rust", "Go", "Python", "Ollama"],
+    insights: ["BM25 + semantic hybrid", "Hand-rolled HNSW", "0.97 success@10"],
+    links: [{ label: "Source", href: "https://github.com/razeenwasif/omni" }],
+    detail: {
+      tagline:
+        "Every IR primitive hand-written from scratch — inverted index, BM25F, WAND, HNSW, segment merges — fused into a hybrid lexical + semantic search engine.",
+      overview: [
+        "Omni is a from-scratch search engine. The core is intentionally std-only Rust — the inverted index, BM25F fielded ranking, Block-Max WAND pruning, Porter stemming, phrase queries, HNSW approximate nearest neighbour, segment persistence, and merge policy are all hand-authored rather than delegated to Lucene or Tantivy. A separate Go crawler (stdlib only) handles the BFS frontier, robots.txt, per-host rate limiting, and HTML extraction; a Python harness grades ranking quality.",
+        "The engine fuses two retrieval modes. Block-Max WAND pulls a BM25F candidate pool, which is fused with dense 768-dim semantic search (nomic-embed-text via Ollama) through Reciprocal Rank Fusion. Documents are chunked into ~150-word passages, each embedded and scored independently so a long document can't drown a small relevant section. The index is a directory of immutable content-addressed segments with a log-size auto-merge policy and a background merger thread that rebalances live, swapping an `Arc` snapshot atomically with zero dropped requests. It registers as the Flux browser's default search backend over a two-endpoint HTTP API.",
+      ],
+      stats: [
+        { label: "nDCG@10", value: "0.666", sub: "Hybrid vs 0.477 lexical-only" },
+        { label: "success@10", value: "0.97", sub: "31/32 graded queries" },
+        { label: "Corpus", value: "~12k docs", sub: "Academic, 65k passages" },
+        { label: "Core deps", value: "std-only", sub: "No Lucene / Tantivy" },
+      ],
+      sections: [
+        {
+          eyebrow: "Retrieval",
+          title: "Hybrid BM25F + semantic search with passage-level scoring",
+          body: [
+            "A two-phase query path retrieves a BM25F candidate pool with Block-Max WAND (≈97% posting-list pruning on selective queries), then re-ranks it with a title boost, a proximity bonus, and a PageRank-lite link-graph signal. Lexical and dense results are fused via Reciprocal Rank Fusion with a tunable semantic weight.",
+            "Dense retrieval is passage-level: documents are chunked into ~150-word windows (≤6 per doc), each embedded with nomic-embed-text and scored independently, with the document taking its best passage's score. On the graded eval this beat naive whole-doc embeddings by +17.8% nDCG and fixed the 21% of docs that whole-doc mode left unembedded.",
+          ],
+          bullets: [
+            "BM25F fielded ranking (title 3× body) + positional phrase queries",
+            "Block-Max WAND dynamic pruning — ~97% of postings skipped on selective queries",
+            "Reciprocal Rank Fusion of lexical + 768-dim semantic results",
+            "Passage-level retrieval — best-passage scoring beats whole-doc embeddings",
+          ],
+        },
+        {
+          eyebrow: "Index",
+          title: "Hand-rolled HNSW, segmented store, live background merges",
+          body: [
+            "The semantic index is a hand-written HNSW graph (diversity neighbour selection, deterministic seeded RNG) persisted as a tiny sidecar — 36 KB of topology rehydrated against mmap'd segment vectors. The lexical index is a directory of immutable content-addressed segments with delta + varint posting compression; a tiered log-size merge policy keeps the segment count at merge_factor · log(N).",
+            "A background merger thread rebalances the index while the server serves traffic, swapping an `Arc<Index>` snapshot atomically behind an RwLock — zero dropped requests. Incremental `--update` diffs the doc store by URL + content hash and re-indexes only what changed, so adding pages never triggers a full rebuild.",
+          ],
+          bullets: [
+            "Hand-written HNSW ANN with a signature-validated sidecar",
+            "Immutable content-addressed segments, delta + varint postings",
+            "Tiered log-size auto-merge with a live background merger thread",
+            "Atomic `Arc` snapshot swaps — incremental updates with no downtime",
+          ],
+        },
+        {
+          eyebrow: "Serving",
+          title: "Custom HTTP server, RAG answers, and Flux integration",
+          body: [
+            "Even the HTTP layer is hand-rolled — a custom HTTP/1.0 server with chunked fallback and Server-Sent Events streaming, no web framework. It exposes `/search` (HTML), `/ac` (autocomplete JSON), `/answer` (generative RAG), `/ingest` (live doc ingestion from Flux), and `/stats`/`/dashboard` telemetry.",
+            "Generative answers ground a local gemma4:12b in the top-5 passages and stream a cited 2–5 sentence response token-by-token over SSE; an extractive direct-answer mode returns the best passage verbatim at zero latency cost. Omni registers as Flux's default search engine with live omnibox autocomplete and a `!bang` shortcut table.",
+          ],
+          bullets: [
+            "Custom HTTP/1.0 server with chunked transfer + SSE streaming, no framework",
+            "Local-LLM RAG answers with inline citations, streamed over SSE",
+            "Live `/ingest` from Flux — pages stage, embed, and swap in without downtime",
+            "Registers as the Flux omnibox backend with autocomplete + `!bang` routing",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    index: "06",
     slug: "onyx",
     title: "Onyx · Markdown Notes TUI",
     year: "2026",
@@ -379,7 +516,7 @@ export const projects: Project[] = [
     },
   },
   {
-    index: "05",
+    index: "07",
     slug: "audiopulse",
     title: "AudioPulse · Spotify-Style TUI Player",
     year: "2026",
@@ -446,7 +583,7 @@ export const projects: Project[] = [
     },
   },
   {
-    index: "06",
+    index: "08",
     slug: "boxtube",
     title: "BoxTube · Terminal YouTube Client",
     year: "2026",
@@ -513,7 +650,173 @@ export const projects: Project[] = [
     },
   },
   {
-    index: "07",
+    index: "09",
+    slug: "kata",
+    title: "Kata · Terminal LeetCode Clone",
+    year: "2026",
+    summary:
+      "A local, keyboard-first LeetCode clone that lives entirely in the terminal (Rust + Ratatui). 304 problems across 32 categories, solutions compiled and executed in network-isolated Docker sandboxes across 8 languages, automatic language-agnostic grading, streak + progress tracking, a streaming Ollama chat assistant, and Markdown export straight into an Onyx / Obsidian vault.",
+    stack: ["Rust", "Ratatui", "Docker", "Ollama"],
+    insights: ["304 problems · 8 languages", "Docker-sandboxed runs", "Onyx vault export"],
+    links: [
+      { label: "Source", href: "https://github.com/razeenwasif/Kata" },
+      { label: "crates.io", href: "https://crates.io/crates/katacode" },
+    ],
+    detail: {
+      tagline:
+        "LeetCode without the browser — a terminal problem bank with Docker-sandboxed execution across eight languages.",
+      overview: [
+        "Kata is a browser-free LeetCode clone built as a Ratatui TUI in Rust. You browse a curated problem bank, write a solution in a keyboard-driven editor, run it instantly against test cases in an isolated Docker sandbox, and on a 100% pass the solution is exported as a Markdown note into a personal vault — all without leaving the terminal. The whole 304-problem bank is embedded into the single binary at compile time via `include_dir`.",
+        "Two design choices carry it. Test cases are correct-by-construction: instead of hand-typing expected outputs, reference solutions are run through the real Docker sandbox to generate them, and every language variant is verified to pass the same tests. And execution is non-blocking — compiles and runs happen on a worker thread over an mpsc channel, so the UI stays responsive (scroll, search, chat) through even a slow Rust or Java compile.",
+      ],
+      stats: [
+        { label: "Problems", value: "304", sub: "82 Easy / 173 Med / 48 Hard" },
+        { label: "Languages", value: "8", sub: "Python … Rust … SQL … ARM ASM" },
+        { label: "Categories", value: "32", sub: "Blind 75 + applied domains" },
+        { label: "Sandbox", value: "Docker", sub: "--network none, read-only" },
+      ],
+      sections: [
+        {
+          eyebrow: "Execution",
+          title: "Sandboxed, multi-language, non-blocking",
+          body: [
+            "Each test runs in a fresh transient container with `--network none`, a read-only rootfs, and per-language memory / CPU / PID caps under a host-enforced wall-clock timeout. Eight languages are expressed as a pure-data `RUNTIMES` table (image, filename, command, limits) — adding a language is one table row. Grading is language-agnostic over shared stdin/stdout, so a compile error simply surfaces as a failed case.",
+            "Runs execute on a worker thread and drain into the event loop each tick, so the editor, fuzzy finder, and AI panel never freeze while a solution compiles.",
+          ],
+          bullets: [
+            "Per-test isolated containers — no network, read-only, resource-capped",
+            "8 languages (Python, C++, Rust, Go, Java, TypeScript, SQL, ARM AArch64) as a data table",
+            "Correct-by-construction tests — expected outputs generated by running references",
+            "Worker-thread execution — UI stays live through long compiles",
+          ],
+        },
+        {
+          eyebrow: "Workflow",
+          title: "Progress tracking, fuzzy finding, and vault export",
+          body: [
+            "A persistent JSON log tracks solved / attempted problems and a solving streak, surfaced as a 🔥 streak widget and inline status glyphs. A Spotlight-style fuzzy finder ranks by title / category / difficulty. On a first full pass, Kata atomically writes a Markdown note (YAML frontmatter + problem + solution) into `~/OnyxVault/Kata`, integrating directly with the Onyx vault. A `Ctrl-A` panel streams a local Ollama model (default gemma4:12b) with `/hint`, `/explain`, `/complexity`, and `/review` slash commands scoped to the open problem and current code.",
+          ],
+          bullets: [
+            "Persistent streak + solved/attempted tracking with activity strip",
+            "Fuzzy problem finder (Skim algorithm) and category-grouped navigator",
+            "Atomic Markdown export into the Onyx / Obsidian vault on first pass",
+            "Context-aware Ollama assistant with hint / explain / complexity / review commands",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    index: "10",
+    slug: "mamba",
+    title: "Mamba · Verified Math Practice Engine",
+    year: "2026",
+    summary:
+      "A terminal mathematics-practice engine (Rust + Ratatui) that mathematically verifies answers instead of string-matching them. A universal router dispatches each answer to one of three pipelines — symbolic (algebraic equivalence by numeric probing), tensor (exact rational matrices), and exact (arbitrary-precision number theory with Miller–Rabin). 262 problems across 18 topics, FSRS spaced repetition, near-miss diagnostics, dimensional analysis, a local AI tutor, and an MCP server that exposes the verifier to other agents.",
+    stack: ["Rust", "Ratatui", "Ollama", "MCP"],
+    insights: ["Math verification, not string match", "FSRS spaced repetition", "MCP verifier server"],
+    links: [{ label: "Source", href: "https://github.com/razeenwasif/mamba" }],
+    detail: {
+      tagline:
+        "A math trainer that actually checks your math — symbolic, matrix, and number-theory answers verified, not string-compared.",
+      overview: [
+        "Mamba is the math sibling to Kata: a Ratatui TUI where you work a curated problem bank, type a mathematical answer, and have it genuinely verified rather than string-matched. The hard part it solves is that `3/5` and `6/10`, or `2sin(x)cos(x)` and `sin(2x)`, are the same answer — so verification routes through real mathematics, not text comparison.",
+        "A universal routing engine dispatches each problem by domain to one of three specialized pipelines: symbolic (multivariate algebraic equivalence via numeric probing, including exp / ln / trig), tensor (exact rational matrices, so dimension and value are checked exactly), and exact (arbitrary-precision integers with deterministic Miller–Rabin primality). Correct solves are archived as Markdown notes scheduled with FSRS spaced repetition. Verification runs off-thread, so even a slow check never freezes the UI.",
+      ],
+      stats: [
+        { label: "Problems", value: "262", sub: "18 topics, 3 domains" },
+        { label: "Verifier", value: "3 pipelines", sub: "Symbolic / tensor / exact" },
+        { label: "Scheduler", value: "FSRS", sub: "Tunable retention 0.70–0.97" },
+        { label: "Integration", value: "MCP", sub: "Verifier exposed to agents" },
+      ],
+      sections: [
+        {
+          eyebrow: "Verification",
+          title: "A universal router over three mathematical pipelines",
+          body: [
+            "Each problem's domain routes its answer to symbolic, tensor, or exact verification — extensible to a new domain by adding a module and one router arm. Symbolic compares expressions by numeric probing for algebraic equivalence; tensor uses exact rational cells so `3/5 = 6/10`; exact uses arbitrary-precision integers and Miller–Rabin primality. Physics and engineering problems additionally run dimensional analysis (it rejects `30 kg` for a force, accepts `30 N`).",
+            "Wrong answers aren't just rejected — a near-miss analyzer recognizes off-by-sign, constant-factor, reciprocal, transpose, swapped-complex-part, and off-by-one relationships and surfaces them as learning hints.",
+          ],
+          bullets: [
+            "Domain router → symbolic / tensor / exact pipelines (meval, ndarray, num-bigint)",
+            "Algebraic equivalence by numeric probing; exact rational matrices; bignum number theory",
+            "Dimensional analysis for physics / engineering answers",
+            "Near-miss diagnostics — sign, factor, reciprocal, transpose, off-by-one",
+          ],
+        },
+        {
+          eyebrow: "Study system",
+          title: "FSRS scheduling, AI tutor, and an MCP verifier server",
+          body: [
+            "Solves write Markdown notes with FSRS state into a local vault, and a rolling `_progress.md` dashboard tracks streaks, per-domain breakdowns, and topic mastery against a DAG curriculum with prerequisite lock badges. A `Ctrl-A` tutor streams a local Ollama model scoped to the open problem; `Ctrl-G` has the tutor author a new problem that Mamba's own engine independently cross-verifies before offering it.",
+            "Mamba also runs as an MCP server (`mamba mcp`) over stdio, exposing its verification engine — `verify`, `solve`, `recommend_next`, `due`, `curriculum` — so other AI agents can check math against a real engine instead of trusting an LLM's arithmetic.",
+          ],
+          bullets: [
+            "FSRS spaced-repetition scheduling with per-user optimization",
+            "Curriculum DAG with prerequisite locks and topic-mastery tracking",
+            "Local Ollama tutor + engine-cross-verified problem generation",
+            "MCP server exposing the verifier to other agents over stdio",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    index: "11",
+    slug: "canopy",
+    title: "Canopy · Terminal LaTeX Editor",
+    year: "2026",
+    summary:
+      "A single-binary terminal LaTeX editor (Rust + Tokio + Ratatui). Vim-style modal editing on a rope buffer, compilation inside an ephemeral network-isolated Docker container (read-only rootfs, dropped capabilities, memory + wall-clock caps), and inline PDF preview rendered in the terminal via Kitty / iTerm2 / Sixel. An Overleaf-style three-pane workspace with a local Ollama assistant — no server, no cloud.",
+    stack: ["Rust", "Tokio", "Ratatui", "Docker"],
+    insights: ["Sandboxed LaTeX compile", "Inline terminal PDF preview", "Vim modal editor"],
+    links: [{ label: "Source", href: "https://github.com/razeenwasif/Canopy" }],
+    detail: {
+      tagline:
+        "Overleaf in the terminal — edit, compile in an isolated container, and preview the PDF inline, all in one Rust binary.",
+      overview: [
+        "Canopy is a terminal LaTeX editor that gives you the full Overleaf loop — edit, compile, preview — as a single self-contained Rust binary with no server, database, or network dependency. The motivating concern is safety: LaTeX is Turing-complete and can perform arbitrary file I/O via `\\write18`, so Canopy never compiles untrusted `.tex` on the host. Every build runs inside a fresh, locked-down Docker container.",
+        "The editor is a vim-style modal editor over a ropey rope buffer (O(log n) edits) with full motion and command support. Compilation spawns as a background Tokio task and streams results back over a channel while editing stays synchronous and responsive — a single `tokio::select!` loop multiplexes the keystroke stream and the compile channel. The resulting PDF rasterizes and renders inline in the terminal.",
+      ],
+      stats: [
+        { label: "Binary", value: "Single", sub: "~3.2k LOC Rust, no server" },
+        { label: "Sandbox", value: "network:none", sub: "RO rootfs, caps dropped" },
+        { label: "Preview", value: "Inline", sub: "Kitty / iTerm2 / Sixel" },
+        { label: "Editor", value: "Vim modal", sub: "Rope buffer (ropey)" },
+      ],
+      sections: [
+        {
+          eyebrow: "Sandbox",
+          title: "Every compile in an ephemeral, locked-down container",
+          body: [
+            "Each build runs in a fresh TeX Live container (via the bollard Docker API) with `network: none`, a read-only root filesystem with a 64 MiB tmpfs `/tmp`, all Linux capabilities dropped, a PID cap, a memory limit (default 512 MiB), and a hard wall-clock timeout enforced by killing the container. It runs as the host uid:gid so outputs aren't root-owned. The engine re-runs up to four passes until cross-references and the TOC stabilize, then cleans 30+ auxiliary extensions, keeping the PDF and sources.",
+          ],
+          bullets: [
+            "Ephemeral TeX Live container per compile via the bollard async API",
+            "network:none, read-only rootfs, dropped caps, PID + memory + time limits",
+            "Multi-pass until references stabilize, then auxiliary-file cleanup",
+            "Configurable engine (pdflatex / xelatex / lualatex) and image",
+          ],
+        },
+        {
+          eyebrow: "Workspace",
+          title: "Modal editor, inline PDF preview, and a local assistant",
+          body: [
+            "The Overleaf-style three-pane workspace puts the modal editor, the PDF preview, and an AI assistant side by side, with `Ctrl-W` cycling focus. The editor is full vim — Normal / Insert / Command modes, motions, `dd`/`D`/`x`, `:w`/`:make`/`:e` — over a rope buffer, with LaTeX syntax highlighting and a gitignore-aware fuzzy file finder. The PDF preview rasterizes pages at 150 DPI with pdftoppm and renders them inline via ratatui-image, negotiating Kitty → iTerm2 → Sixel → half-block, auto-refreshing after each successful compile.",
+            "A `Ctrl-A` assistant streams a local Ollama model (loopback only) with the current document as context, stoppable mid-stream — keeping the whole tool offline.",
+          ],
+          bullets: [
+            "Vim modal editing on a ropey rope buffer with LaTeX highlighting",
+            "Inline PDF preview at 150 DPI via Kitty / iTerm2 / Sixel protocols",
+            "Three-pane Overleaf-style workspace with focus cycling",
+            "Gitignore-aware fuzzy file finder + local Ollama assistant",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    index: "12",
     slug: "gpu-kernel",
     title: "GPU-Accelerated Kernel Subsystem",
     year: "2025",
@@ -548,7 +851,7 @@ export const projects: Project[] = [
     },
   },
   {
-    index: "08",
+    index: "13",
     slug: "risc-cpu",
     title: "16-Bit RISC CPU",
     year: "2024",
@@ -908,6 +1211,20 @@ export const timeline: TimelineEntry[] = [
     org: "Honours-track research",
     detail:
       "Single-GPU LoRA + DoRA + QLoRA pipeline on Mistral-7B-Instruct-v0.3 producing physics, math, and CS domain-specialist verifiers for the Council multi-agent system. PTQ vs QAT quantization curve as the headline ablation.",
+  },
+  {
+    year: "Jun 2026",
+    role: "Flux · Omni",
+    org: "AI browser + search engine",
+    detail:
+      "An AI-native desktop browser (Rust / Tauri v2) with a DOM-aware PTY terminal and a local Gemma 12B agent, paired with Omni — a from-scratch hybrid search engine (std-only Rust core, Go crawler) doing BM25F + semantic retrieval over a 12k-doc corpus that powers Flux's omnibox.",
+  },
+  {
+    year: "Jun 2026",
+    role: "Kata · Mamba · Canopy",
+    org: "Three Rust TUIs",
+    detail:
+      "A Docker-sandboxed terminal LeetCode clone (304 problems, 8 languages), a math-practice engine that mathematically verifies answers across symbolic / tensor / exact pipelines with FSRS scheduling and an MCP verifier, and a terminal LaTeX editor compiling inside locked-down containers with inline PDF preview.",
   },
   {
     year: "Jun 2026",

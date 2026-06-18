@@ -244,6 +244,36 @@
     \end{onecolentry}
 
     \begin{twocolentry}{
+        \href{https://github.com/razeenwasif/flux}{Github}
+    }
+        \textbf{Flux: AI-Native Desktop Browser}
+    \end{twocolentry}
+
+    \vspace{0.05 cm}
+    \begin{onecolentry}
+        \begin{highlights}
+            \item Built an \textbf{AI-native desktop browser} in \textbf{Rust + Tauri v2} (native OS webviews, no Electron) — an \textbf{8--15 MB} binary with $<$80 MB idle RAM, using a \textbf{zero-copy DOM IPC pipeline} that shares page snapshots as \texttt{Arc<[u8]>} across the terminal, agent, and embedder.
+            \item Integrated a fully \textbf{local LLM agent} (Gemma 12B via Ollama / llama.cpp) that reads the page DOM and performs preview-and-approve actions behind a destructive-action deny-list — no cloud, no token cost.
+            \item Shipped a real-\textbf{PTY} terminal sidebar with a DOM-aware CLI, webview hibernation under memory pressure, a Brave-engine ad/tracker blocker, and an \textbf{AES-256-GCM} password vault with OS-keychain key storage.
+        \end{highlights}
+    \end{onecolentry}
+
+    \begin{twocolentry}{
+        \href{https://github.com/razeenwasif/omni}{Github}
+    }
+        \textbf{Omni: From-Scratch Hybrid Search Engine}
+    \end{twocolentry}
+
+    \vspace{0.05 cm}
+    \begin{onecolentry}
+        \begin{highlights}
+            \item Hand-rolled a search engine in \textbf{std-only Rust} (Go crawler, Python eval harness) — inverted index, \textbf{BM25F} ranking, Block-Max WAND pruning, Porter stemming, and a hand-written \textbf{HNSW} ANN index, with no Lucene / Tantivy.
+            \item Fused lexical and \textbf{768-dim semantic} retrieval via Reciprocal Rank Fusion with passage-level scoring, reaching \textbf{0.666 nDCG@10} (vs.~0.477 lexical-only) and \textbf{0.97 success@10} on a 12k-document graded benchmark.
+            \item Engineered live incremental indexing with content-addressed segments, a background tiered-merge thread, and atomic \texttt{Arc} snapshot swaps (zero downtime); serves a custom \textbf{HTTP/1.0 + SSE} API with local-LLM RAG answers that powers the Flux omnibox.
+        \end{highlights}
+    \end{onecolentry}
+
+    \begin{twocolentry}{
         \href{https://nexus-cluster.web.app}{Live}
     }
         \textbf{Nexus: Distributed Training Console}
