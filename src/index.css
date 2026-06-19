@@ -79,7 +79,12 @@
     background-size: 240px 240px;
     opacity: 0.085;
     mix-blend-mode: soft-light;
-    animation: grain-shimmer 3.2s steps(6, end) infinite;
+  }
+
+  @media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    body::before {
+      animation: grain-shimmer 3.2s steps(6, end) infinite;
+    }
   }
 
   @keyframes grain-shimmer {
@@ -271,6 +276,11 @@
   @media (max-width: 768px) {
     .topo-meta {
       display: none;
+    }
+
+    .animate-topo-dash,
+    .animate-topo-dot {
+      animation: none;
     }
   }
 

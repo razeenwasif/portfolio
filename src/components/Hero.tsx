@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { site } from "../data/site";
 import { useReveal } from "../hooks/useReveal";
-import { useResumeModal } from "./ResumeModal";
+import { useResumeModal } from "./resumeModalContext";
 
 export function Hero() {
   const r1 = useReveal<HTMLDivElement>();
@@ -25,6 +25,7 @@ export function Hero() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
     if (reduceMotion) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
 
     const orbA = orbARef.current;
     const orbB = orbBRef.current;
@@ -39,15 +40,18 @@ export function Hero() {
     const STIFF = 0.06;
     const MAX_A = 70;
     const MAX_B = 110; // back orb drifts further for a hint of depth
+    let lastMoveAt = 0;
+    let raf: number | null = null;
 
     const onMove = (e: MouseEvent) => {
       const w = window.innerWidth;
       const h = window.innerHeight;
       mx = (e.clientX / w - 0.5) * 2;
       my = (e.clientY / h - 0.5) * 2;
+      lastMoveAt = performance.now();
+      if (raf === null) raf = requestAnimationFrame(loop);
     };
 
-    let raf = 0;
     const loop = () => {
       const tax = mx * MAX_A;
       const tay = my * MAX_A;
@@ -61,14 +65,24 @@ export function Hero() {
         orbA.style.transform = `translate3d(${ax.toFixed(2)}px, ${ay.toFixed(2)}px, 0)`;
       if (orbB)
         orbB.style.transform = `translate3d(${bx.toFixed(2)}px, ${by.toFixed(2)}px, 0)`;
+
+      const settled =
+        Math.abs(tax - ax) < 0.1 &&
+        Math.abs(tay - ay) < 0.1 &&
+        Math.abs(tbx - bx) < 0.1 &&
+        Math.abs(tby - by) < 0.1;
+      if (performance.now() - lastMoveAt > 900 && settled) {
+        raf = null;
+        return;
+      }
+
       raf = requestAnimationFrame(loop);
     };
 
     window.addEventListener("mousemove", onMove, { passive: true });
-    loop();
     return () => {
       window.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(raf);
+      if (raf !== null) cancelAnimationFrame(raf);
     };
   }, []);
 
@@ -318,18 +332,8 @@ function ScrambleText({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      setDisplay(target);
       return;
     }
-
-    // Seed the display with a fresh batch of glyphs so the next run starts
-    // from a scrambled state (not from the previously-settled final text).
-    setDisplay(
-      target
-        .split("")
-        .map((ch) => (isStable(ch) ? ch : randGlyph()))
-        .join(""),
-    );
 
     const len = target.length;
     const PER_CHAR_LOCK = 65; // ms between successive char locks

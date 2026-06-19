@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useResumeModal } from "./ResumeModal";
+import { useResumeModal } from "./resumeModalContext";
 import { getLenis } from "../hooks/useLenis";
 
 const links = [
@@ -19,11 +19,15 @@ export function Nav() {
 
   // Auto-close the mobile sheet when the route or hash changes.
   useEffect(() => {
-    setMenuOpen(false);
+    const id = window.setTimeout(() => setMenuOpen(false), 0);
+    return () => window.clearTimeout(id);
   }, [location.pathname, location.hash]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const next = window.scrollY > 20;
+      setScrolled((prev) => (prev === next ? prev : next));
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);

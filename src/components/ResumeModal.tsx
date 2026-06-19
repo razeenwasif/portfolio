@@ -1,25 +1,10 @@
 import {
-  createContext,
-  useContext,
   useEffect,
   useState,
   type ReactNode,
 } from "react";
 import { getLenis } from "../hooks/useLenis";
-
-type ResumeModalCtx = {
-  isOpen: boolean;
-  open: () => void;
-  close: () => void;
-};
-
-const Ctx = createContext<ResumeModalCtx | null>(null);
-
-export function useResumeModal(): ResumeModalCtx {
-  const v = useContext(Ctx);
-  if (!v) throw new Error("useResumeModal must be used within ResumeModalProvider");
-  return v;
-}
+import { ResumeModalContext } from "./resumeModalContext";
 
 export function ResumeModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,10 +33,10 @@ export function ResumeModalProvider({ children }: { children: ReactNode }) {
   const close = () => setIsOpen(false);
 
   return (
-    <Ctx.Provider value={{ isOpen, open, close }}>
+    <ResumeModalContext.Provider value={{ isOpen, open, close }}>
       {children}
       {isOpen && <ResumeModal onClose={close} />}
-    </Ctx.Provider>
+    </ResumeModalContext.Provider>
   );
 }
 

@@ -412,7 +412,8 @@ export function TopoBackground() {
   useEffect(() => {
     if (
       typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        window.matchMedia("(max-width: 768px)").matches)
     )
       return;
     const id = window.setInterval(() => {

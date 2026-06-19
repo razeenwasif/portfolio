@@ -63,7 +63,16 @@ export function CustomCursor() {
     const onLeaveWindow = () => setVisible(false);
     const onEnterWindow = () => setVisible(true);
 
-    let rafId = 0;
+    let rafId: number | null = null;
+    let idleTimer: number | null = null;
+
+    const stopTick = () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    };
+
     const tick = () => {
       const dot = dotRef.current;
       const ring = ringRef.current;
@@ -83,21 +92,33 @@ export function CustomCursor() {
       rafId = requestAnimationFrame(tick);
     };
 
-    window.addEventListener("mousemove", onMove, { passive: true });
+    const startTick = () => {
+      if (rafId === null) rafId = requestAnimationFrame(tick);
+    };
+
     document.addEventListener("mouseover", onOver);
     document.addEventListener("mouseout", onOut);
     document.addEventListener("mouseleave", onLeaveWindow);
     document.addEventListener("mouseenter", onEnterWindow);
-    rafId = requestAnimationFrame(tick);
+
+    const onPointerMove = (e: MouseEvent) => {
+      onMove(e);
+      startTick();
+      if (idleTimer !== null) window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(stopTick, 1200);
+    };
+
+    window.addEventListener("mousemove", onPointerMove, { passive: true });
 
     return () => {
       document.documentElement.classList.remove("custom-cursor-active");
-      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousemove", onPointerMove);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onOut);
       document.removeEventListener("mouseleave", onLeaveWindow);
       document.removeEventListener("mouseenter", onEnterWindow);
-      cancelAnimationFrame(rafId);
+      if (idleTimer !== null) window.clearTimeout(idleTimer);
+      stopTick();
     };
   }, []);
 

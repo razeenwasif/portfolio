@@ -7,7 +7,8 @@ export function useLenis() {
   useEffect(() => {
     if (
       typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        !window.matchMedia("(pointer: fine)").matches)
     ) {
       return;
     }
